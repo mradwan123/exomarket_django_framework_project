@@ -9,7 +9,7 @@ class User(models.Model):
     birthdate = models.DateField()
     
     def __str__(self):
-        return f'User {self.username} added'
+        return f'Username: {self.username} added!'
     
 class Item(models.Model):
     name = models.CharField(max_length=100)
@@ -24,7 +24,7 @@ class Item(models.Model):
     available = models.BooleanField(default=True)
     
     def __str__(self):
-        return f'Item {self.name} costs {self.price}'
+        return f'Item Name: {self.name}'
     
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
