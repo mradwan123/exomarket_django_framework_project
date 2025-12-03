@@ -9,11 +9,11 @@ class User(models.Model):
     birthdate = models.DateField()
     
     def __str__(self):
-        return User.username
+        return f'User {self.username} added'
     
 class Item(models.Model):
     name = models.CharField(max_length=100)
-    desciption = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
     price = models.DecimalField(
         max_digits = 8,
         decimal_places = 2
