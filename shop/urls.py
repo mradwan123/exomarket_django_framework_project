@@ -6,7 +6,7 @@ app_name = 'shop'
 urlpatterns = [
     path('', home, name='home'),
     path('items/', item_views, name='items'),
-    path('items/', item_update, name='items'),
+    path('items/', item_update, name='items'), #same parent folder??
     path('users/', user_create_view, name='users'),
     path('users/login/', login, name='login'),
     
