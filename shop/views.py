@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Item
+from .models import Item, Cart
 
 # Create your views here.
 
@@ -10,8 +10,8 @@ def home(request):
 ############## Item Views: ################
 
 def item_create(request):
-    item = Item.objects.create(name='Open AI secret code', description='very secret', price=10, category='tech', available=True )
-    item2 = Item.objects.create(name='Database center', description='with nice chips', price=100.65, category='hardware', available=True )
+    item, _ = Item.objects.create(name='Open AI secret code', description='very secret', price=10, category='tech', available=True )
+    item2, _ = Item.objects.create(name='Database center', description='with nice chips', price=100.65, category='hardware', available=True )
 
     print(item)
     return HttpResponse('item added')
@@ -31,11 +31,17 @@ def list_items(request):
 
 ############## Cart Views: ################
 
-# def add_cart(request):
-#     return HttpResponse('added to cart')
+#WIP
+def add_to_cart(request):
     
-# def view_cart(request):
-#     return HttpResponse('view to cart')
+    cart, _ = Cart.objects.get_or_create(name='new item')
+    
+    return HttpResponse('added to cart')
+    
+def view_cart(request):
+    view_cart = Cart.objects.all()
+    print(view_cart)
+    return HttpResponse('view to cart')
 
     
 # def update_cart(request):
