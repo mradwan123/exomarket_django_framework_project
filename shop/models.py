@@ -16,16 +16,18 @@ class Item(models.Model):
     available = models.BooleanField(default=True)
     
     def __str__(self):
-        return f'Item Name: {self.name}'
+        return f' Item Name: {self.name}'
     
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Item, related_name='items')
-    total_price = models.DecimalField(
-        max_digits = 8,
-        decimal_places = 2
-    )
     
+    @property
+    def total_price(self):
+        total = sum(item.price for item in self.items.all())
+        return total
+    
+   
     def __str__(self):
         return f'Items of {self.user} are {self.items} with a total cost of {self.total_price}'
 
