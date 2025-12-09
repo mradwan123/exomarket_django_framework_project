@@ -6,10 +6,11 @@ from .models import Item, Cart
 
 def item_detail(request):
     context = {
-        'user': request.user
+        'user': request.user,
+        'name': Item.name
     }
     
-    return render(request,'view_item_detail.html', context=context )
+    return render(request,'item_detail_view.html', context=context )
 
 # Item Views: 
 
@@ -50,12 +51,23 @@ def add_to_cart_view(request):
     cart, _ = Cart.objects.get_or_create(user_id=1)
     cart.items.add(item_obj)
     print(cart.items)
-    return HttpResponse('Added to cart')
     
-def view_user_cart_view(request):
-    cart_items = Cart.objects.filter(user=request.user) #THIS SHOULD BE FOR ONE USER
-    print(cart_items)
-    return HttpResponse('Viewing the cart in the shop')
+    return HttpResponse('Added item to the cart in the shop')
+    
+# def view_user_cart_view(request):
+#     cart = Cart.objects.filter(user=request.user) #THIS SHOULD BE FOR ONE USER
+    
+    
+#     print(bool(cart))
+#     if cart:
+#         cart_items = cart.items.all()
+#         print(cart_items)
+#         context = {
+#             "cart_items":cart_items,
+#             "cart": cart[0]
+            
+#         }
+#     return render(request, 'cart_view.html', context=context)
 
     
 # def update_cart_view(request):

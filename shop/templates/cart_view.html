@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Cart View Page{% endblock %}
+
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+<p><b>Hello {{ user }}</b></p>
+
+<ul>
+    {% for i in cart_items %}
+        <li>{{ i.name }}</li>
+
+    {% endfor %}
+</ul>
+
+{% endblock %}
