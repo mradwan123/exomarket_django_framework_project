@@ -15,4 +15,4 @@ class User(AbstractUser):
     birth_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return f'Username: {self.username} added!'
+        return f'{self.username}'

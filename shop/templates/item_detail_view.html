@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block header %}{% endblock %}
+{% block title %}View All Items Page{% endblock %}
+
+
+{% block content %}
+
+<h1>List of all items</h1>
+<h2>List:</h2>
+<ul>
+    {% for i in all_items %}
+        <li>{{ i }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

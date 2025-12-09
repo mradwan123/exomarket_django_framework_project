@@ -4,51 +4,61 @@ from .models import Item, Cart
 
 # Create your views here.
 
-def home(request):
-    return HttpResponse('Welcome to Home page')
+def item_detail(request):
+    context = {
+        'user': request.user
+    }
+    
+    return render(request,'view_item_detail.html', context=context )
 
-############## Item Views: ################
+# Item Views: 
 
-def item_create(request):
+def item_create_view(request):
     item  = Item.objects.create(name='Open AI secret code', description='very secret', price=10, category='tech', available=True )
     item2 = Item.objects.create(name='Database center', description='with nice chips', price=100.65, category='hardware', available=True )
 
     print(item)
-    return HttpResponse('item added')
+    return HttpResponse('Item added')
     
     
-def item_update(request):
+def item_update_view(request):
     item = Item.objects.filter(name='Database center').update(name='Huge Database center')
     if item:
         return HttpResponse('Found it')
-    return HttpResponse('What are you looking for? entry dont exist')
+    return HttpResponse('Please check again! Das entry does not exist!')
 
-def list_items(request):
+def list_items_view(request):
     all_items = Item.objects.all()
     print(all_items)
-    return HttpResponse('all items')
+    context = {
+        'user': request.user,
+        'all_items': all_items,
+    }
+    return render(request, 'view_all_items.html', context=context)
 
-def item_delete(request):
+def item_delete_view(request):
     item5 = Item.objects.filter(name='Huge Database center').delete()
     
     print(item5)
     return HttpResponse(f'Item has been DELETED!')
 
-############## Cart Views: ################
+# Cart Views: 
 
 #WIP
-def add_to_cart(request):
+def add_to_cart_view(request):
     item_obj, _ = Item.objects.get_or_create(name='new object for cart', price=20, seller_id=2)
     cart, _ = Cart.objects.get_or_create(user_id=1)
     cart.items.add(item_obj)
     print(cart.items)
-    return HttpResponse('added to cart')
+    return HttpResponse('Added to cart')
     
-def view_cart(request):
-    # view_cart = Cart.objects.all() #THIS SHOULD BE FOR ONE USER
-    print(view_cart)
-    return HttpResponse('view the cart in da shop')
+def view_user_cart_view(request):
+    cart_items = Cart.objects.filter(user=request.user) #THIS SHOULD BE FOR ONE USER
+    print(cart_items)
+    return HttpResponse('Viewing the cart in the shop')
 
     
-def update_cart(request):
-    return HttpResponse('cart updated')
+# def update_cart_view(request):
+#     updated_item, created = Cart.objects.filter(user=request.user, item=request.item_create)
+    
+#     return HttpResponse('cart updated')

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Shop Home Page{% endblock %}
+
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+<p><b>Hello {{ user }}</b></p>
+<img src="{% static 'img/cat.jpg' %}" width="300">
+
+{% endblock %}

@@ -4,7 +4,7 @@ from .models import User
 # Create your views here.
 
 
-############## Authentication Views: ################
+# Authentication Views: 
 
 def home(request):
     return HttpResponse('Welcome to User Home page')
@@ -20,4 +20,9 @@ def user_register_view(request):
 def login(request):
     user1 = request.GET.get(username='testuser')
     
+    
     return HttpResponse('Please login')
+
+# def logout(request)
+    # user1 = request.GET.get(username='testuser')
+    

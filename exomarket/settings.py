@@ -125,6 +125,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Global static files
+    BASE_DIR / 'shop_templates' / 'static',# App-specific static files
+    BASE_DIR / 'users_templates' / 'static',  # App-specific static files
+
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
