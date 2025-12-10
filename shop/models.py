@@ -10,7 +10,7 @@ class Item(models.Model):
         max_digits = 8,
         decimal_places = 2
     )
-    image = models.ImageField(upload_to='item_img')
+    image = models.ImageField(upload_to='item_img', null=True, blank=True)
     category = models.CharField(max_length=50, null=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     available = models.BooleanField(default=True)

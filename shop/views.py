@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Item, Cart
+from .forms import ItemForm
 
 # Create your views here.
 
-def item_detail(request):
+def item_detail(request, item_id):
+    item = Item.objects.GET.get(id=item_id)
+    
     context = {
-        'user': request.user,
-        'name': Item.name
+        'item': item,
+        
     }
     
     return render(request,'item_detail_view.html', context=context )
@@ -15,11 +18,16 @@ def item_detail(request):
 # Item Views: 
 
 def item_create_view(request):
-    item  = Item.objects.create(name='Open AI secret code', description='very secret', price=10, category='tech', available=True )
-    item2 = Item.objects.create(name='Database center', description='with nice chips', price=100.65, category='hardware', available=True )
+    if request.method == 'POST':
+        form = ItemForm(request.POST)
+        if form.is_valid():
+            item = form.save()
+            return HttpResponse('Item was created and added to database.')
+        return HttpResponse('Invalid input')
+    else:
+        form = ItemForm
+        return render(request, 'create_item.html', {'form':form}) 
 
-    print(item)
-    return HttpResponse('Item added')
     
     
 def item_update_view(request):
