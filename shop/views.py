@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Item, Cart
 from .forms import ItemForm
@@ -30,11 +30,18 @@ def item_create_view(request):
 
     
     
-def item_update_view(request):
-    item = Item.objects.filter(name='Database center').update(name='Huge Database center')
-    if item:
-        return HttpResponse('Found it')
-    return HttpResponse('Please check again! Das entry does not exist!')
+def item_update_view(request, product_id):
+    item = get_object_or_404(Item, id=product_id)
+    print(item.id)
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('Success! Your Item Has Been Updated.')
+        return HttpResponse('Houston, we have an issue. Invalid data was input :/ ')
+    else:   
+        form = ItemForm(instance=item)
+        return render(request, 'update_item.html', {'form':form})
 
 def list_items_view(request):
     all_items = Item.objects.all()

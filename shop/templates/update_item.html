@@ -1,11 +1,13 @@
 {% extends "base.html" %}
+
+
 {% block title %}
-    Create Item in Database 
+    Update Item in Database 
 {% endblock %}
 
 
 {% block header %}
-    Create Item
+    Update Item
 {% endblock %}
 
 {% block content %}
@@ -13,7 +15,7 @@
     {% csrf_token %}
     {{ form.as_p }}
    
-    <button type="submit">Enter to Create Item</button>
+    <button type="submit">Enter to Update Item</button>
    
 </form>
  {% endblock %}
