@@ -6,14 +6,8 @@ from .forms import ItemForm
 # Create your views here.
 
 def item_detail(request, item_id):
-    item = Item.objects.GET.get(id=item_id)
-    
-    context = {
-        'item': item,
-        
-    }
-    
-    return render(request,'item_detail_view.html', context=context )
+    item = get_object_or_404(Item, id=item_id)
+    return render(request, 'item_detail_view.html', {'item':item}) 
 
 # Item Views: 
 
@@ -21,7 +15,9 @@ def item_create_view(request):
     if request.method == 'POST':
         form = ItemForm(request.POST)
         if form.is_valid():
-            item = form.save()
+            item = form.save(commit=False)
+            item.seller = request.user
+            item.save()
             return HttpResponse('Item was created and added to database.')
         return HttpResponse('Invalid input')
     else:
@@ -33,6 +29,8 @@ def item_create_view(request):
 def item_update_view(request, product_id):
     item = get_object_or_404(Item, id=product_id)
     print(item.id)
+    if request.user != item.seller:
+        return HttpResponse("You are not allowed to update this item!")
     if request.method == 'POST':
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
@@ -52,11 +50,17 @@ def list_items_view(request):
     }
     return render(request, 'view_all_items.html', context=context)
 
-def item_delete_view(request):
-    item5 = Item.objects.filter(name='Huge Database center').delete()
+def item_delete_view(request, product_id):
+    item = get_object_or_404(Item, id=product_id)
+    if request.user != item.seller:
+        return HttpResponse("You are not allowed to delete this item!")
+
+    if request.method == 'GET':
+        item.delete()
+        return HttpResponse(f'Success!! Item {item.name} has been DELETED!')
+    # return HttpResponse('Houston, we have an issue. Invalid attempt to delete :/ ')
+
     
-    print(item5)
-    return HttpResponse(f'Item has been DELETED!')
 
 # Cart Views: 
 

@@ -7,12 +7,14 @@
 
 <h1>Details of Item: </h1>
 
+<p>Item Name: {{ item.name }}</p>
 <ul>
-    {% for i in all_items %}
-        <li>{{ i }}</li>
-<a href="{% url 'shop:detail' i.pk %}">Item details</a>
-    {% endfor %}
-</ul>
+        <li>Item Price: {{ item.price}}</li>
+        <li>Item Category: {{ item.category}}</li>
+        <li>Item Description: {{ item.description}}</li>
+        
 
+</ul>
+{% if request.user == item.seller %} <button type="delete">Enter to Delete Item</button>{% endif %}
 {% endblock %}
 
