@@ -15,8 +15,8 @@ class Item(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     available = models.BooleanField(default=True)
     
-    # def __str__(self):
-    #     return f' Item Name: {self.name}'
+    def __str__(self):
+        return f' Item Name:{self.id} {self.name}'
     
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

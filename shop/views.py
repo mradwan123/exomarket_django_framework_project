@@ -55,9 +55,9 @@ def item_delete_view(request, product_id):
     if request.user != item.seller:
         return HttpResponse("You are not allowed to delete this item!")
 
-    if request.method == 'GET':
-        item.delete()
-        return HttpResponse(f'Success!! Item {item.name} has been DELETED!')
+    item_name = item.name
+    item.delete()
+    return HttpResponse(f'Success!! Item {item_name} has been DELETED!')
     # return HttpResponse('Houston, we have an issue. Invalid attempt to delete :/ ')
 
     
