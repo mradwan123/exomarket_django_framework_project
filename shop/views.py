@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Item, Cart
 from .forms import ItemForm
 from users.models import User
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -27,7 +29,7 @@ def item_create_view(request):
             item = form.save(commit=False)
             item.seller = request.user
             item.save()
-            return HttpResponse('Item was created and added to database.')
+            return redirect('shop:list-seller-items', seller_id=request.user.pk)
         return HttpResponse('Invalid input')
     else:
         form = ItemForm
@@ -67,6 +69,20 @@ def item_delete_view(request, product_id):
     item.delete()
     return HttpResponse(f'Success!! Item {item.name} has been DELETED!')
     # return HttpResponse('Houston, we have an issue. Invalid attempt to delete :/ ')
+    
+    
+def seller_all_items_view(request, seller_id):
+   
+    if request.user.pk != seller_id:
+        return HttpResponse("You are not allowed to view these items. Wrong seller id. Please try again.")
+    
+    all_items = Item.objects.filter(seller_id=seller_id)
+     
+    context = {
+            'all_items': all_items,
+            }        
+    return render(request, 'seller_all_items_view.html', context=context)
+   
 
     
 

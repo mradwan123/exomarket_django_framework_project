@@ -22,15 +22,22 @@
 {% block content %}
 
 <h1>List of all items</h1>
+            <form method="GET" action="{% url 'shop:create-item' %}">
+                <button type='submit'>Add New Item to Inventory</button>
+            </form>
 <ul>
     {% for item in all_items %}
         <li>
-            <b>Item name: {{ item.name }}</b><br>
-            Description: {{ item.description }}<br>
-            Price: ${{ item.price }}<br>
-            Seller: {{ item.seller.username }}<br>
-            <button type='submit'>Add to Cart</button>
+            <b>Item Name:</b> {{ item.name }}<br>
+            <b>Description:</b> {{ item.description }}<br>
+            <b>Price:</b> €{{ item.price }}<br>
+            <b>Seller:</b> {{ item.seller.username }}<br>
+            
+            <a href="{% url 'shop:delete' item.id %}" class="btn btn-danger">Delete from Inventory</a>            
+            <button type="submit">Update Item Details</button>
+           
             <hr>
+            
         </li>
     
     {% endfor %}
