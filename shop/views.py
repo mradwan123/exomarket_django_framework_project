@@ -41,7 +41,7 @@ def item_update_view(request, product_id):
     if request.user != item.seller:
         return HttpResponse("You are not allowed to update this item!")
     if request.method == 'POST':
-        form = ItemForm(request.POST, instance=item)
+        form = ItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
             form.save()
             return HttpResponse('Success! Your Item Has Been Updated.')

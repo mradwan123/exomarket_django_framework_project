@@ -18,6 +18,12 @@ class Item(models.Model):
     def __str__(self):
         return f' Item Name:{self.id} {self.name}'
     
+    
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
+    
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     items = models.ManyToManyField(Item, related_name='items')

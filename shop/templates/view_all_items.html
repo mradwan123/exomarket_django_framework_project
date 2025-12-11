@@ -3,15 +3,36 @@
 {% block title %}View All Items Page{% endblock %}
 
 
-{% block content %}
 
 <h1>List of all items</h1>
 <h2>List:</h2>
 <ul>
     {% for i in all_items %}
         <li>{{ i }}</li>
-
+        Price: {{ i.price }}<br>
+        <button type='submit'>Add to Cart</button>
+         <form method="POST" action="{% url 'add-to-cart' item.id %}">
+                {% csrf_token %}
+                <button type='submit'>Add to Cart</button>
+            </form>
     {% endfor %}
 </ul>
+<p></p>
 
+{% block content %}
+
+<h1>List of all items</h1>
+<ul>
+    {% for item in all_items %}
+        <li>
+            <strong>{{ item.name }}</strong><br>
+            Description: {{ item.description }}<br>
+            Price: ${{ item.price }}<br>
+            Seller: {{ item.seller.username }}<br>
+            <button type='submit'>Add to Cart</button>
+            <hr>
+        </li>
+    
+    {% endfor %}
+</ul>
 {% endblock %}
