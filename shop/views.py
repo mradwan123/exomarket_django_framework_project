@@ -2,8 +2,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Item, Cart
 from .forms import ItemForm
+from users.models import User
 
 # Create your views here.
+
+def home(request):
+    
+    context = {
+        'user': request.user.username
+    }
+    return render(request, 'home.html', context)
 
 def item_detail(request, item_id):
     item = get_object_or_404(Item, id=item_id)
@@ -13,7 +21,8 @@ def item_detail(request, item_id):
 
 def item_create_view(request):
     if request.method == 'POST':
-        form = ItemForm(request.POST)
+        form = ItemForm(request.POST, request.FILES)
+        print(request.FILES)
         if form.is_valid():
             item = form.save(commit=False)
             item.seller = request.user
@@ -55,9 +64,8 @@ def item_delete_view(request, product_id):
     if request.user != item.seller:
         return HttpResponse("You are not allowed to delete this item!")
 
-    item_name = item.name
     item.delete()
-    return HttpResponse(f'Success!! Item {item_name} has been DELETED!')
+    return HttpResponse(f'Success!! Item {item.name} has been DELETED!')
     # return HttpResponse('Houston, we have an issue. Invalid attempt to delete :/ ')
 
     

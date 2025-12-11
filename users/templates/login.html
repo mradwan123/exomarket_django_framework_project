@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}User Home Page{% endblock %}
+{% block title %}User Login Page{% endblock %}
 
 
 {% block content %}
@@ -14,7 +14,7 @@
     {% csrf_token %}
     {{ form.as_p }}
    
-    <button type="submit">Go to Login </button>
+    <button type="submit">Press Enter to Login </button>
    
 </form>
 
