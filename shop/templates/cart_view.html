@@ -3,16 +3,27 @@
 {% block title %}Cart View Page{% endblock %}
 
 
-{% block content %}
 
-<h1>{{ title }}</h1>
-<p><b>Hello {{ user }}</b></p>
+{% block content %}  
+
+<h1>List of all items in {{ cart.user }} cart:</h1>
 
 <ul>
-    {% for i in cart_items %}
-        <li>{{ i.name }}</li>
+    {% for item in cart_items %}
+        <li>
+            <b>Item Name:</b> {{ item.name }}<br>
+            <b>Description:</b> {{ item.description }}<br>
+            <b>Price:</b> €{{ item.price }}<br>
+            
+            <a href="{% url 'shop:remove-cart' item.id %}" class="btn btn-danger">Remove from Cart</a>            
 
+            <hr>
+            
+        </li>
+    
     {% endfor %}
 </ul>
+
+    Total Price for all items: EUR {{ total_price }}
 
 {% endblock %}

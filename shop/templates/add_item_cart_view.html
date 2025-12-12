@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Add Item to Cart 
+{% endblock %}
+
+
+{% block header %}
+    Items:
+{% endblock %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+   
+   {% for item in all_items %}
+    <div>
+        <h3>{{ item.name }}</h3>
+        <p>Price: ${{ item.price }}</p>
+        <a href="{% url 'shop:add-to-cart' item.id %}">Add to Cart</a>
+    </div>
+{% endfor %}
+    <button type="submit">Enter to Add Item to Cart</button>
+   
+</form>
+ {% endblock %}

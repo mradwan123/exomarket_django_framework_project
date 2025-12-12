@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item
+from .models import Item, Cart
 
 
 class ItemForm(forms.ModelForm):
@@ -13,3 +13,4 @@ class ItemForm(forms.ModelForm):
                     'category', 
                     'available',
                  ]   
+        

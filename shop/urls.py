@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import home, item_detail, item_create_view, item_update_view, list_items_view, item_delete_view, seller_all_items_view
-from .views import add_to_cart_view # view_user_cart_view #, update_cart_view
+from .views import add_to_cart_view, view_user_cart_view, remove_from_cart_view #, update_cart_view
 app_name = 'shop'
 
 urlpatterns = [
@@ -11,8 +11,10 @@ urlpatterns = [
     path('items/list', list_items_view, name='list'), 
     path('<int:seller_id>/items/list/', seller_all_items_view, name='list-seller-items'), 
     path('items/<int:product_id>/delete/', item_delete_view, name='delete'), 
-    path('cart/add', add_to_cart_view, name='add-to-cart'),
-    # path('cart/view', view_user_cart_view, name='view-cart'),
+    path('cart/<int:item_id>/add/', add_to_cart_view, name='add-to-cart'),
+    path('cart/view', view_user_cart_view, name='view-cart'),
+    path('cart/<int:item_id>/remove', remove_from_cart_view, name='remove-cart'),
+
     # path('cart/update', update_cart_view, name='update-cart'),
 
 ]

@@ -2,11 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Item, Cart
 from .forms import ItemForm
-from users.models import User
-from django.db.models import Q
 
 
-# Create your views here.
+# Home view
 
 def home(request):
     
@@ -15,16 +13,16 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
+# Item Views: 
+
 def item_detail(request, item_id):
     item = get_object_or_404(Item, id=item_id)
     return render(request, 'item_detail_view.html', {'item':item}) 
 
-# Item Views: 
 
 def item_create_view(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
-        print(request.FILES)
         if form.is_valid():
             item = form.save(commit=False)
             item.seller = request.user
@@ -35,7 +33,6 @@ def item_create_view(request):
         form = ItemForm
         return render(request, 'create_item.html', {'form':form}) 
 
-    
     
 def item_update_view(request, product_id):
     item = get_object_or_404(Item, id=product_id)
@@ -52,14 +49,16 @@ def item_update_view(request, product_id):
         form = ItemForm(instance=item)
         return render(request, 'update_item.html', {'form':form})
 
+
 def list_items_view(request):
     all_items = Item.objects.all()
-    print(all_items)
+    
     context = {
         'user': request.user,
         'all_items': all_items,
     }
     return render(request, 'view_all_items.html', context=context)
+
 
 def item_delete_view(request, product_id):
     item = get_object_or_404(Item, id=product_id)
@@ -89,18 +88,40 @@ def seller_all_items_view(request, seller_id):
 # Cart Views: 
 
 #WIP
-def add_to_cart_view(request):
-    item_obj, _ = Item.objects.get_or_create(name='new object for cart', price=20, seller_id=2)
-    cart, _ = Cart.objects.get_or_create(user_id=1)
-    cart.items.add(item_obj)
-    print(cart.items)
+def add_to_cart_view(request, item_id):
+    """
+    Docstring for add_to_cart_view: 
+    Passing item_id from url -> checking POST request - getting item details - creating cart if it doesnt exist for user
+    add and saving item to cart- providing response
     
-    return HttpResponse('Added item to the cart in the shop')
+    :param request: requried for function based views in django ORM
+    :param item_id: id from Item class passed in url
+    """
+
+                
+    item = Item.objects.get(id=item_id) #retrieving item details from the Item calls per id=item_id
+        
+    cart, created = Cart.objects.get_or_create(user=request.user) #creating or accesing exists cart based on user existing
+    if cart.items.filter(id=item_id).exists(): #checking to see if item already exists in the cart
+        return HttpResponse("this item exists in the cart")
+
+    cart.items.add(item)
+    cart.save()
+    return redirect('shop:view-cart')
+            
     
-# def view_user_cart_view(request):
-#     cart = Cart.objects.filter(user=request.user) #THIS SHOULD BE FOR ONE USER
-    
-    
+def view_user_cart_view(request):
+    cart_items = Cart.objects.filter(user=request.user) #THIS SHOULD BE FOR ONE USER
+    # total_price = Cart.objects.filter(user=request.user)
+    context = {
+              'cart_items': cart_items, 
+              # 'total_price': total_price,
+            }
+    return render(request, 'cart_view.html', context=context)
+
+def remove_from_cart_view(request, item_id):
+    pass
+
 #     print(bool(cart))
 #     if cart:
 #         cart_items = cart.items.all()

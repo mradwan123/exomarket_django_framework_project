@@ -34,8 +34,8 @@
             <b>Seller:</b> {{ item.seller.username }}<br>
             
             <a href="{% url 'shop:delete' item.id %}" class="btn btn-danger">Delete from Inventory</a>            
-            <button type="submit">Update Item Details</button>
-           
+            <a href="{% url 'shop:update' item.id %}" class="btn btn-danger">Update Item Details</a>            
+
             <hr>
             
         </li>
