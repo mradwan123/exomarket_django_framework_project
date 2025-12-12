@@ -111,16 +111,24 @@ def add_to_cart_view(request, item_id):
             
     
 def view_user_cart_view(request):
-    cart_items = Cart.objects.filter(user=request.user) #THIS SHOULD BE FOR ONE USER
-    # total_price = Cart.objects.filter(user=request.user)
+    cart, _ = Cart.objects.get_or_create(user=request.user) #THIS SHOULD GET CART FOR ONE USER
+    cart_items = cart.items.all() #Retrieve items in the cart for that user
     context = {
               'cart_items': cart_items, 
-              # 'total_price': total_price,
+              'total_price': cart.total_price
             }
+    print(cart_items)
     return render(request, 'cart_view.html', context=context)
 
 def remove_from_cart_view(request, item_id):
-    pass
+    removed_item = Item.objects.get(id=item_id) # get info from class for item to be removed by id
+    cart = Cart.objects.get(user=request.user) # get cart to be accessing 
+
+    if cart.items.filter(id=item_id).exists():#checking to see if item exists in the cart
+        cart.items.remove(removed_item)
+    
+        return redirect('shop:view-cart')
+
 
 #     print(bool(cart))
 #     if cart:

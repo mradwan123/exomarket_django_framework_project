@@ -6,7 +6,7 @@
 
 {% block content %}  
 
-<h1>List of all items in {{ cart.user }} cart:</h1>
+<h1>List of all items in {{ request.user }} cart:</h1>
 
 <ul>
     {% for item in cart_items %}
