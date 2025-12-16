@@ -2,26 +2,11 @@
 {% block header %}{% endblock %}
 {% block title %}View All Items Page{% endblock %}
 
-
-
-                                <h1>List of all items</h1>
-                                <h2>List:</h2>
-                                <ul>
-                                    {% for i in all_items %}
-                                        <li>{{ i }}</li>
-                                        Price: {{ i.price }}<br>
-                                        <button type='submit'>Add to Cart</button>
-                                        <form method="POST" action="{% url 'add-to-cart' item.id %}">
-                                                {% csrf_token %}
-                                                <button type='submit'>Add to Cart</button>
-                                            </form>
-                                    {% endfor %}
-                                </ul>
-                                <p></p>
-
 {% block content %}
 
-<h1>List of all items</h1>
+{% if user.is_authenticated %}
+<h1>List of all items for {{ user }} </h1>
+{% endif %}
 <ul>
     {% for item in all_items %}
         <li>
