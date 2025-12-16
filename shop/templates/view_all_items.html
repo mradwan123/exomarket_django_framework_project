@@ -10,11 +10,12 @@
 <ul>
     {% for item in all_items %}
         <li>
-            <b>Item name: {{ item.name }}</b><br>
-            Description: {{ item.description }}<br>
-            Price: ${{ item.price }}<br>
-            Seller: {{ item.seller.username }}<br>
-            <a href="{% url 'shop:add-to-cart' item.id %}">Add to Cart</a>
+            <b>Item name:</b> {{ item.name }}<br>
+            <b>Description:</b> {{ item.description }}<br>
+            <b>Price:</b> ${{ item.price }}<br>
+           
+            <a href="{% url 'shop:detail' item.id %}" class="btn-link">View Item Details 📇 </a>
+            <a href="{% url 'shop:add-to-cart' item.id %}">Add to Cart 🛒</a>
             <hr>
         </li>
     

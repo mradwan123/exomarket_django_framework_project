@@ -7,14 +7,22 @@
 
 <h1>Details of Item: </h1>
 
-<p>Item Name: {{ item.name }}</p>
+{% if item.image %}
+    <img src="{{ item.image.url }}" alt="{{ item.name }}" style="max-width: 300px; max-height: 300px;">
+{% else %}
+    <p>No image available</p>
+{% endif %}
+
+<p><b>Item Name: {{ item.name }}</b></p>
 <ul>
-        <li>Item Price: {{ item.price}}</li>
-        <li>Item Category: {{ item.category}}</li>
-        <li>Item Description: {{ item.description}}</li>
-        
+        <li><b>Item Price:</b> {{ item.price}}</li>
+        <li><b>Item Category:</b> {{ item.category}}</li>
+        <li><b>Item Description:</b> {{ item.description}}</li>
+        <li><b>Seller:</b> {{ item.seller}}</li>
+        {% if item.available %}<li><b>Available:</b> Yes</li>{% endif %}
 
 </ul>
+
 {% if request.user == item.seller %} <button type="delete">Enter to Delete Item</button>{% endif %}
 {% endblock %}
 
