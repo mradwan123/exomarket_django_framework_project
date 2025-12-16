@@ -1,8 +1,12 @@
 body {
-    background: #60e0f7;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
+    background-color: #c1eed0;;
+    color: #333;
+    margin: 0;
+    padding: 40px;
 }
 
 h1 {
-    color: darkblue;
+    color: rgb(239, 223, 189);
 }
+

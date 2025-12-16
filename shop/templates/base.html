@@ -3,15 +3,62 @@
 <html>
     <head>
 <div style="text-align: center;">
-    <img src="{% static 'img/logo.jpg' %}" width="200">
+    <img src="{% static 'img/logo.jpg' %}" width="200" padding="200">
 </div>
+
 
 
     <title>{% block title %}My Site{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {margin: 0;}
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: #111;}
+
+ul.topnav li a.active {background-color: #04AA6D;}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right, 
+  ul.topnav li {float: none;}
+}
+</style>
+
 </head>
 <body>
+<body>
 
+<ul class="topnav">
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="shop:add-to-cart">Add to Cart</a></li>
+  <li><a href="shop:view-cart">View Cart</a></li>
+  <li><a href="shop:list">See all items</a></li>
+  <li class="right"><a href="#about">About</a></li>
+</ul>
+
+
+</body>
 <header>
     <h1>My Exotic Market Website</h1>
 </header>
@@ -26,3 +73,6 @@
 
 </body>
 </html>
+
+
+
