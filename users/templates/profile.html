@@ -8,12 +8,21 @@
 <h2>Your Profile</h2>
 <p>Welcome, {{ user.username }}!</p>
 
+    <p><strong>First Name:</strong> {{ user.first_name }} </p>
+    <p><strong>Last Name:</strong> {{ user.last_name }} </p>
+
 <p> To see all your items being sold, please press the button below</p>
-   {% if item.seller.id %}
-    <a href="{% url 'shop:list-seller-items' item.id %}" >
+   {% if item and item.id %}
+    <a href="{% url 'shop:list-seller-items' item.id %}" class="btn-link">
         View Your Seller's Cart 📇 </a>
+    {% endif %}
+
+    {% if user.is_superuser %}
+    <p><strong>Role:</strong> Superuser / Administrator</p>
+    <p><strong>Permissions:</strong> Full access to all features</p>
     {% endif %}
 
 
 
+<p><strong>Last Login:</strong> {{ user.last_login }} </p>
 {% endblock %}

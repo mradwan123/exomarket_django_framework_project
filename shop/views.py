@@ -79,7 +79,7 @@ def seller_all_items_view(request, seller_id):
      
     context = {
             'all_items': all_items,
-            }        
+            'seller_id': seller_id}        
     return render(request, 'seller_all_items_view.html', context=context)
    
 
