@@ -5,7 +5,7 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-<h1>List of all items for {{ user }} </h1>
+<h1>List of all items: </h1>
 {% endif %}
 <ul>
     {% for item in all_items %}

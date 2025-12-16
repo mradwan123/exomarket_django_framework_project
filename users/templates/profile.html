@@ -12,8 +12,8 @@
     <p><strong>Last Name:</strong> {{ user.last_name }} </p>
 
 <p> To see all your items being sold, please press the button below</p>
-   {% if item and item.id %}
-    <a href="{% url 'shop:list-seller-items' item.id %}" class="btn-link">
+   {% if item and seller.id %}
+    <a href="{% url 'shop:list-seller-items' seller.id %}" class="btn-link">
         View Your Seller's Cart 📇 </a>
     {% endif %}
 

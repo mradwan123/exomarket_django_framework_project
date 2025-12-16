@@ -50,12 +50,17 @@ ul.topnav li.right {float: right;}
 <body>
 
 <ul class="topnav">
-  <li><a class="active" href="#home">Home</a></li>
- 
-  <li><a href="/shop/cart/view">View Cart</a></li>
-  <li><a href="/shop/items/list">See all items</a></li>
-  <li class="right"><a href="/users/logout">Logout</a></li>
-  <li class="right"><a href="/users/profile">Profile</a></li>
+  <li><a class="active" href="/shop/">Home</a></li>
+ {% if user.is_authenticated %}
+      <li><a href="/shop/cart/view">View Cart</a></li>
+      <li><a href="/shop/items/list">See all items</a></li>
+      <li class="right"><a href="/users/profile">Profile</a></li>
+      <li class="right"><a href="/users/logout">Logout</a></li> 
+  {% else %}
+    <li class="right"><a href="/users/login">Login</a></li> 
+  {% endif %}
+
+  
 </ul>
 
 
