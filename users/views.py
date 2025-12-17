@@ -51,6 +51,19 @@ def logout_custom(request):
         return redirect('users:login')
     return render(request, 'logout_confirm.html')
 
+@login_required
+def update_profile(request):
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+    else:
+        form = UserForm()
+    
+    return render(request, 'update.html', {'form':form})
+
+        
+
 
 # def loggin(request):
 #     if request.method == "POST":

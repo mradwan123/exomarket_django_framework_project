@@ -12,7 +12,7 @@
     <p><strong>Last Name:</strong> {{ user.last_name }} </p>
 
 <p> To see all your items being sold, please press the button below</p>
-   {% if item and seller.id %}
+    {% if item and seller.id %}
     <a href="{% url 'shop:list-seller-items' seller.id %}" class="btn-link">
         View Your Seller's Cart 📇 </a>
     {% endif %}
@@ -22,7 +22,8 @@
     <p><strong>Permissions:</strong> Full access to all features</p>
     {% endif %}
 
-
+<p>If you would like to update the details in your profile, go here</p>
+<a href="{% url 'users:update-profile' %}" class="btn-link">Update Details</a>
 
 <p><strong>Last Login:</strong> {{ user.last_login }} </p>
 {% endblock %}

@@ -47,7 +47,7 @@ ul.topnav li.right {float: right;}
 }
 </style>
 <nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
     <a class="navbar-brand">Search Exomarket</a>
     <form class="d-flex" role="search" action="{% url 'shop:search-view' %}" method="POST">
       {% csrf_token %}
@@ -55,7 +55,9 @@ ul.topnav li.right {float: right;}
       <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
   </div>
+  
 </nav>
+
 </head>
 <body>
 <body>
