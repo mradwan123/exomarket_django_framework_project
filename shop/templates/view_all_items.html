@@ -8,7 +8,9 @@
 <h1>List of all items: </h1>
 {% endif %}
 <ul>
+    {% if all_items %}
     {% for item in all_items %}
+    
         <li>
             <b>Item name:</b> {{ item.name }}<br>
             <b>Description:</b> {{ item.description }}<br>
@@ -18,7 +20,11 @@
             <a href="{% url 'shop:add-to-cart' item.id %}" class="btn-link">Add to Cart 🛒</a>
             <hr>
         </li>
-    
+   
+
     {% endfor %}
+    {% else %}
+    <h3>No search results found</h3>
+    {% endif %}
 </ul>
 {% endblock %}
