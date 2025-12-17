@@ -7,13 +7,13 @@ body {
 }
 
 h1 {
-    color: rgb(239, 223, 189);
+    color: rgb(76, 54, 6);
 }
 
 .btn-link {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #074004;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -25,7 +25,7 @@ h1 {
 }
 
 .btn-link:hover {
-    background-color: #0056b3;
+    background-color: #034119;
     text-decoration: none;
     color: white;
 }

@@ -15,7 +15,7 @@
             <b>Price:</b> ${{ item.price }}<br>
            
             <a href="{% url 'shop:detail' item.id %}" class="btn-link">View Item Details 📇 </a>
-            <a href="{% url 'shop:add-to-cart' item.id %}">Add to Cart 🛒</a>
+            <a href="{% url 'shop:add-to-cart' item.id %}" class="btn-link">Add to Cart 🛒</a>
             <hr>
         </li>
     

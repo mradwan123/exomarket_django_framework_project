@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
 <style>
 body {margin: 0;}
 
@@ -44,20 +46,33 @@ ul.topnav li.right {float: right;}
   ul.topnav li {float: none;}
 }
 </style>
-
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand">Search Exomarket</a>
+    <form class="d-flex" role="search" action="{% url 'shop:search-view' %}" method="POST">
+      {% csrf_token %}
+      <input class="form-control me-2" type="search" placeholder="Enter Search Item" aria-label="Search" name="name"/>
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 </head>
 <body>
 <body>
 
 <ul class="topnav">
-  <li><a class="active" href="/shop/">Home</a></li>
- {% if user.is_authenticated %}
-      <li><a href="/shop/cart/view">View Cart</a></li>
-      <li><a href="/shop/items/list">See all items</a></li>
-      <li class="right"><a href="/users/profile">Profile</a></li>
-      <li class="right"><a href="/users/logout">Logout</a></li> 
+ 
+ {% if request.user.is_authenticated %}
+    <li><a class="active" href="/shop/">Home</a></li>
+    <li><a href="/shop/cart/view">View Cart</a></li>
+    <li><a href="/shop/items/list">See all items</a></li>
+    <li><a href="/shop/items/create">Create new item here</a></li>
+    <li class="right"><a href="/users/profile">Profile</a></li>
+    <li class="right"><a href="/users/logout">Logout</a></li> 
   {% else %}
     <li class="right"><a href="/users/login">Login</a></li> 
+    <li class="right"><a href="/users/create">Register</a></li> 
+
   {% endif %}
 
   
@@ -73,7 +88,7 @@ ul.topnav li.right {float: right;}
     {% block content %}{% endblock %}
 </div>
 
-<footer>
+<footer contentEditable>
     <p>© 1995-2025 Radwan Solutions Inc. or its affiliates</p>
 </footer>
 

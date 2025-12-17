@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Search View Page{% endblock %}
+
+{% block content %}
+
+<form class="d-flex" role="search" method="POST">
+ {% csrf_token %}
+ <input
+    class="form-control me-2"
+    type="search"
+    placeholder="Search"
+    name="name"
+    required aria-label="Search"
+ >
+ <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
+{% endblock %}

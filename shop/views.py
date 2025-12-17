@@ -27,6 +27,8 @@ def item_create_view(request):
             item = form.save(commit=False)
             item.seller = request.user
             item.save()
+            # request.user.seller = True
+            # user.save()
             return redirect('shop:list-seller-items', seller_id=request.user.pk)
         return HttpResponse('Invalid input')
     else:
@@ -130,6 +132,16 @@ def remove_from_cart_view(request, item_id):
         return redirect('shop:view-cart')
 
 
+def search_feature(request):
+    if request.method == 'POST':
+        search_query = request.POST['name']
+        # Filter your model by the search query
+        posts = Item.objects.filter(name__contains=search_query)
+        return render(request, 'view_all_items.html', {'all_items':posts})
+    else:
+        return render(request, 'search.html',{})
+    
+    
 #     print(bool(cart))
 #     if cart:
 #         cart_items = cart.items.all()

@@ -28,10 +28,23 @@ def create_user(request):
     
     return render(request, 'create.html', {'form':form})
    
+   
+def login_custom(request):
+    if request.method == 'POST':
+        user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
+        if user is not None:
+            login(request, user)
+            return redirect('shop:list')
+        else:
+            return redirect('users:login')
+    return render(request, 'login.html')
+
+   
 @login_required
 def profile(request):
     return render(request, 'profile.html')
 
+@login_required
 def logout_custom(request):
     if request.method == 'POST':
         logout(request)
