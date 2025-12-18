@@ -48,3 +48,10 @@ class SessionViewsTest(TestCase):
         response = self.client.post(self.login_url, {})
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('users:login'))
+        self.assertTemplateNotUsed(response, 'wrong_template.html')
+
+        
+    # def test_not_post(self):
+    #     response = self.client 
+    #     self.assertTemplateUsed(response, 'login.html')
+
