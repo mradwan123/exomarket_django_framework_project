@@ -158,3 +158,7 @@ def search_feature(request):
 #     updated_item, created = Cart.objects.filter(user=request.user, item=request.item_create)
     
 #     return HttpResponse('cart updated')
+
+
+def about_view(request):
+    return render(request, 'about.html')

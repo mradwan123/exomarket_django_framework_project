@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import home, item_detail, item_create_view, item_update_view, list_items_view, item_delete_view, seller_all_items_view
 from .views import add_to_cart_view, view_user_cart_view, remove_from_cart_view #, update_cart_view
-from .views import search_feature
+from .views import search_feature, about_view
 app_name = 'shop'
 
 urlpatterns = [
@@ -17,6 +17,8 @@ urlpatterns = [
     path('cart/<int:item_id>/remove', remove_from_cart_view, name='remove-cart'),
     
     path('search/', search_feature, name='search-view'),
+
+    path('about/', about_view, name='about')
 
     # path('cart/update', update_cart_view, name='update-cart'),
 

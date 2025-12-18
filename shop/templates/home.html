@@ -6,8 +6,11 @@
 {% block content %}
 
 <h1>{{ title }}</h1>
-<p><b>Hello {{ user }}</b></p>
-<p><strong>Last Login:</strong> {{ user.last_login }} </p>
+{% if request.user.is_authenticated %}<p><b>Hello {{ user }}</b></p> 
+<p><strong>Last Login:</strong> {{ request.user.last_login }} </p>
+{% else %}
+<p><b>Hello Stranger, would you like to register?</b></p> 
+{% endif %}
 
 <div style="text-align: center;">
     <img src="{% static 'img/img_market.jpg' %}" width="400" padding="200">

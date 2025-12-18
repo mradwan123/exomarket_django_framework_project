@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Cart View Page{% endblock %}
-
+{% block page_header %}{% endblock %}
 
 
 {% block content %}  
@@ -15,7 +15,7 @@
             <b>Description:</b> {{ item.description }}<br>
             <b>Price:</b> €{{ item.price }}<br>
             
-            <a href="{% url 'shop:remove-cart' item.id %}" class="btn btn-danger">Remove from Cart</a>            
+            <a href="{% url 'shop:remove-cart' item.id %}" class="btn-link">Remove from Cart</a>            
 
             <hr>
             

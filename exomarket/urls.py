@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
+
 
 # urls.py (development only)
 from django.conf import settings
@@ -23,6 +25,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     
+    path('', RedirectView.as_view(pattern_name='shop:home', permanent=False)),
     path('admin/', admin.site.urls),
     path('shop/', include('shop.urls', namespace='shop')),
     path('users/', include('users.urls', namespace='users')),
