@@ -2,15 +2,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-<div style="text-align: center;">
-    <img src="{% static 'img/logo.jpg' %}" width="200" padding="200">
-</div>
+      <div style="text-align: center;">
+      <img src="{% static 'img/logo.jpg' %}" width="200" padding="200">
+      </div>
 
 
 
     <title>{% block title %}My Site{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <head>
+    <link rel="icon" type="image/x-icon" href="/shop/static/img/favicon.ico">
+
+    
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -46,19 +48,19 @@ ul.topnav li.right {float: right;}
   ul.topnav li {float: none;}
 }
 </style>
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <a class="navbar-brand">Search Exomarket</a>
-    <form class="d-flex" role="search" action="{% url 'shop:search-view' %}" method="POST">
-      {% csrf_token %}
-      <input class="form-control me-2" type="search" placeholder="Enter Search Item" aria-label="Search" name="name"/>
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
-  
-</nav>
 
-</head>
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+          <a class="navbar-brand">Search Exomarket</a>
+          <form class="d-flex" role="search" action="{% url 'shop:search-view' %}" method="POST">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Enter Search Item" aria-label="Search" name="name"/>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div> 
+      </nav>
+
+    </head>
 <body>
 <body>
 

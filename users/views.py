@@ -61,7 +61,7 @@ def update_profile(request):
         form = UserForm()
     
     return render(request, 'update.html', {'form':form})
-
+# need to test above function for saved data - ,next step: must check admin page.
         
 
 
