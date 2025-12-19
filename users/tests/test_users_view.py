@@ -66,7 +66,7 @@ class SessionViewsTest(TestCase):
         # User should NOT be logged in
         self.assertNotIn('_auth_user_id', self.client.session)
 
-def test_login_with_wrong_password(self):
+    def test_login_with_wrong_password(self):
         """Test login with wrong username but correct password"""
         response = self.client.post(self.login_url, {
             'username': 'wrong username',
@@ -77,3 +77,42 @@ def test_login_with_wrong_password(self):
         self.assertRedirects(response, reverse('users:login'))
         # User should NOT be logged in
         self.assertNotIn('_auth_user_id', self.client.session)
+        
+    def test_empty_username_password(self):
+        'Validating empty strings for username password as invalid'
+        response = self.client.post(self.login_url, {
+            'username': '',
+            'password': ''
+        })
+        
+        self.assertEqual(response.status_code, 302)
+        
+from django.test import TestCase, Client
+from django.urls import reverse
+
+class LoginCsrfTest(TestCase):
+    def setUp(self):
+        # Enforce real CSRF checks
+        self.client = Client(enforce_csrf_checks=True)
+
+        # Make sure we start with a clean cookie jar
+        self.client.cookies.clear()
+
+        # URL that maps to login_custom
+        self.login_url = reverse('users:login')
+
+    def test_post_without_csrf_token_is_rejected(self):
+        """
+        A POST request to the login view that lacks a valid CSRF token
+        should be rejected with HTTP 403.
+        """
+    
+        response = self.client.post(self.login_url, {
+            'username': '',
+            'password': ''
+        })
+
+        # Expected outcome: 403 Forbidden because no csrfmiddlewaretoken was sent
+        self.assertEqual(response.status_code, 403)
+        
+       
