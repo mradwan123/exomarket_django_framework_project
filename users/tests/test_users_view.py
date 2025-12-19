@@ -9,7 +9,7 @@ class SessionViewsTest(TestCase):
         self.user = User.objects.create_user(
             username= 'testuser7',
             password = 'test123',
-            email = 'tet@gmail.com',
+            email = 'test@gmail.com',
         )
         
         self.home_url = reverse('shop:home')
@@ -31,6 +31,7 @@ class SessionViewsTest(TestCase):
         
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'login.html')
+        self.assertContains(response, '<form')
         
     def test_login_post_valid_user(self):
         response = self.client.post(self.login_url, {
@@ -40,6 +41,7 @@ class SessionViewsTest(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('shop:list'))
+        
         
         session = self.client.session
         self.assertEqual(session.get('user_id'), self.user.id)
@@ -55,3 +57,14 @@ class SessionViewsTest(TestCase):
     #     response = self.client 
     #     self.assertTemplateUsed(response, 'login.html')
 
+    def test_login_with_wrong_password(self):
+        """Test login with correct username but wrong password"""
+        response = self.client.post(self.login_url, {
+            'username': 'testuser7',
+            'password': 'wrongpassword'
+        })
+    
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('users:login'))
+        # User should NOT be logged in
+        self.assertNotIn('_auth_user_id', self.client.session)

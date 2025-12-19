@@ -6,25 +6,28 @@
 
 {% block content %}  
 
-<h1>List of all items in {{ request.user }} cart:</h1>
+<div class="cart-container">
+    <h1>List of all items in {{ request.user }} cart:</h1>
 
-<ul>
-    {% for item in cart_items %}
-        <li>
-            <b>Item Name:</b> {{ item.name }}<br>
-            <b>Description:</b> {{ item.description }}<br>
-            <b>Price:</b> €{{ item.price }}<br>
+    <div class="items-list">
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <div><strong>Item Name:</strong> {{ item.name }}</div>
+            <div><strong>Description:</strong> {{ item.description }}</div>
+            <div><strong>Price:</strong> €{{ item.price }}</div>
             
-            <a href="{% url 'shop:remove-cart' item.id %}" class="btn-link">Remove from Cart</a>            
-
+            <div class="item-action">
+                <a href="{% url 'shop:remove-cart' item.id %}" class="btn-link">Remove from Cart</a>
+            </div>
+            
             <hr>
-            
-        </li>
-    
-    {% endfor %}
-</ul>
+        </div>
+        {% endfor %}
+    </div>
 
-    <strong>TOTAL PRICE FOR ALL ITEMS:</strong> EUR {{ total_price }}
-    <hr>
+    <div class="cart-total">
+        <strong>TOTAL PRICE FOR ALL ITEMS:</strong> €{{ total_price }}
+    </div>
+</div>
 
 {% endblock %}
