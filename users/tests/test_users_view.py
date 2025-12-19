@@ -1,7 +1,8 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from django.urls import reverse
+from ..forms import UserForm
 
 class SessionViewsTest(TestCase):
     
@@ -23,7 +24,7 @@ class SessionViewsTest(TestCase):
         self.assertTemplateUsed(response, 'home.html')
         
         
-    #----- Login_Custom Tests Below:
+    ##----- Login_Custom Tests Below:
     
     def test_login_view_get(self):
         'Test if login page loads correctly and gets'
@@ -66,7 +67,7 @@ class SessionViewsTest(TestCase):
         # User should NOT be logged in
         self.assertNotIn('_auth_user_id', self.client.session)
 
-    def test_login_with_wrong_password(self):
+    def test_login_with_wrong_username(self):
         """Test login with wrong username but correct password"""
         response = self.client.post(self.login_url, {
             'username': 'wrong username',
@@ -87,16 +88,12 @@ class SessionViewsTest(TestCase):
         
         self.assertEqual(response.status_code, 302)
         
-from django.test import TestCase, Client
-from django.urls import reverse
+
 
 class LoginCsrfTest(TestCase):
     def setUp(self):
         # Enforce real CSRF checks
         self.client = Client(enforce_csrf_checks=True)
-
-        # Make sure we start with a clean cookie jar
-        self.client.cookies.clear()
 
         # URL that maps to login_custom
         self.login_url = reverse('users:login')
@@ -116,3 +113,25 @@ class LoginCsrfTest(TestCase):
         self.assertEqual(response.status_code, 403)
         
        
+##-----------Create User Tests
+
+class CreateUserTest(TestCase):
+           
+    def setUp(self):
+        self.create_url = reverse('users:create') 
+
+    def test_get_renders_empty_form(self):
+        """
+        A plain GET request should:
+        • Return status 200
+        • Render the “create.html” template
+        • Supply an unbound UserForm instance in the context
+        """
+        response = self.client.get(self.create_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'create.html')
+
+        form = response.context.get('form')
+        self.assertIsInstance(form, UserForm)
+        self.assertFalse(form.is_bound)   # ensures it’s the empty form
