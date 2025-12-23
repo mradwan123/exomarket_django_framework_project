@@ -37,3 +37,8 @@ class UserModelTest(TestCase):
         User.objects.create_user(username='george', email='a@gmail.com', password='p')
         with self.assertRaises(IntegrityError):
             User.objects.create_user(username='george', email='g@gmail.com', password='p')
+
+    def test_email_unique_constraint(self): #Abstractuser class includes by default unique username
+        User.objects.create_user(username='george', email='george@gmail.com', password='p')
+        with self.assertRaises(IntegrityError):
+            User.objects.create_user(username='radwan', email='george@gmail.com', password='p')
