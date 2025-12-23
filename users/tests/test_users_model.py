@@ -1,6 +1,7 @@
 from django.test import TestCase
 from ..models import User
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 class UserModelTest(TestCase):
     
@@ -26,6 +27,13 @@ class UserModelTest(TestCase):
         with self.assertRaises(ValidationError):
             user = User(birth_date='12-12-12')
             user.full_clean()
-            
-            
-      
+
+    def test_password_hashing(self):        
+        user = User.objects.create_user(username='bob', password='plain')
+        self.assertNotEqual(user.password, 'plain')
+        self.assertTrue(user.check_password('plain'))       
+
+    def test_username_unique_constraint(self): #Abstractuser class includes by default unique username
+        User.objects.create_user(username='george', email='a@gmail.com', password='p')
+        with self.assertRaises(IntegrityError):
+            User.objects.create_user(username='george', email='g@gmail.com', password='p')
