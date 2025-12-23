@@ -47,3 +47,8 @@ class UserModelTest(TestCase):
         user = User.objects.create_user(username='carl')
         self.assertIsNone(user.bio)          # because `blank=True, null=True`
         self.assertIsNone(user.phone_number)
+
+    def test_number_format(self): #after adding regex to model, now can test format
+        user = User(phone_number='number format invalid!')
+        with self.assertRaises(ValidationError):
+            user.full_clean()
