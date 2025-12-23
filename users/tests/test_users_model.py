@@ -43,6 +43,11 @@ class UserModelTest(TestCase):
         with self.assertRaises(IntegrityError):
             User.objects.create_user(username='radwan', email='george@gmail.com', password='p')
 
+    def test_email_blank(self): #Abstractuser class includes by default unique username
+        User.objects.create_user(username='george', password='p')
+        with self.assertRaises(IntegrityError):
+            User.objects.create_user(username='radwan', password='p')
+
     def test_blank_bio_phonenumber(self):    
         user = User.objects.create_user(username='carl')
         self.assertIsNone(user.bio)          # because `blank=True, null=True`
@@ -52,3 +57,9 @@ class UserModelTest(TestCase):
         user = User(phone_number='number format invalid!')
         with self.assertRaises(ValidationError):
             user.full_clean()
+
+    def test_phonenumber_length(self): #should raise error for more than 20
+        user = User(phone_number='+22222222222222222222222222222222222')
+        with self.assertRaises(ValidationError):
+            user.full_clean()
+
