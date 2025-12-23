@@ -42,3 +42,8 @@ class UserModelTest(TestCase):
         User.objects.create_user(username='george', email='george@gmail.com', password='p')
         with self.assertRaises(IntegrityError):
             User.objects.create_user(username='radwan', email='george@gmail.com', password='p')
+
+    def test_blank_bio_phonenumber(self):    
+        user = User.objects.create_user(username='carl')
+        self.assertIsNone(user.bio)          # because `blank=True, null=True`
+        self.assertIsNone(user.phone_number)
