@@ -1,7 +1,11 @@
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 from ..forms import UserForm
+from ..models import User
 
 class UserFormTests(TestCase):
+
+    User = get_user_model() #for hashsed password test
     
     def test_valid_form(self):
         form = UserForm({
@@ -14,7 +18,6 @@ class UserFormTests(TestCase):
         })
         
         self.assertTrue(form.is_valid())
-        
         
         
     def test_blank_data(self):
@@ -77,3 +80,23 @@ class UserFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
         self.assertIn("birth_date",form.errors)
+        
+
+    def test_password_is_hashed(self):
+        
+        data = {
+            "username":      "testerusername",
+            "email":         "tester@gmail.com",
+            "password":      "mySecretPwd123",   # plain‑text password to check with later
+            "phone_number":  "222222222",
+            "bio":           "some text",
+            "birth_date":    "12/12/1976",
+        }
+        form = UserForm(data=data)
+        self.assertTrue(form.is_valid())
+        saved_user = form.save()
+        db_user = User.objects.get(username="testerusername")
+        self.assertTrue(db_user.check_password("mySecretPwd123")) #returns True only if the stored hash matches
+        #     the plain‑text password we originally supplied 
+        self.assertNotEqual(db_user.password,"mySecretPwd123",)
+
