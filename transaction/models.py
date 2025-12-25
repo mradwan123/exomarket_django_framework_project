@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from users.models import User
+
 
 # Create your models here.
 class Transaction(models.Model):
@@ -10,12 +12,12 @@ class Transaction(models.Model):
         ('shipped',   'Shipped'),
     ]
         
-    buyer = models.ForeignKey(settings.AUTH_USER_MODEL, 
+    buyer = models.ForeignKey(User, 
         on_delete=models.CASCADE, 
         related_name='buyer_transactions',
         null=True
         )
-    seller = models.ForeignKey(settings.AUTH_USER_MODEL, 
+    seller = models.ForeignKey(User, 
             on_delete=models.CASCADE, 
             related_name='seller_transactions',
             null=True
