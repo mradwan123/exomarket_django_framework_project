@@ -16,7 +16,8 @@ class UserFormTests(TestCase):
         self.assertTrue(form.is_valid())
         
         
-    # def test_blank_data(self):
-    #     form = UserForm({})
         
-    #     self.assertFalse(form.is_valid)
+    def test_blank_data(self):
+        form = UserForm(data={})
+        
+        self.assertFalse(form.is_valid())
