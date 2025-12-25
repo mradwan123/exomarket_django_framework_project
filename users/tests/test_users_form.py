@@ -39,3 +39,22 @@ class UserFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
         self.assertIn("email",form.errors)
+
+    
+    def test_invalid_phone_format(self):
+        """
+        Provide an email that does not match Django's EmailValidator
+        """
+        data = {
+            "username":      "testerusername",
+            "email":         "email@gmail.com",          # <-- deliberately bad
+            "password":      "test123",
+            "phone_number":  "222222222222222222222222222",
+            "bio":           "some text",
+            "birth_date":    "12/12/1976",
+        }
+
+        form = UserForm(data=data)
+        self.assertFalse(form.is_valid())
+
+        self.assertIn("phone_number",form.errors)
