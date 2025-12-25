@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop.apps.ShopConfig',
     'users.apps.UsersConfig',
+    'transaction'
     
 ]
 
@@ -140,8 +141,8 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Global static files
-    BASE_DIR / 'shop_templates' / 'static',# App-specific static files
-    BASE_DIR / 'users_templates' / 'static',  # App-specific static files
+    BASE_DIR / 'shop' / 'static',# App-specific static files
+    BASE_DIR / 'users' / 'static',  # App-specific static files
 
 ]
 
