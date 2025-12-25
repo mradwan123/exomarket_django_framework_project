@@ -143,6 +143,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Global static files
     BASE_DIR / 'shop' / 'static',# App-specific static files
     BASE_DIR / 'users' / 'static',  # App-specific static files
+    BASE_DIR / 'transaction' / 'static',  # App-specific static files
 
 ]
 

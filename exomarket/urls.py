@@ -29,4 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('shop/', include('shop.urls', namespace='shop')),
     path('users/', include('users.urls', namespace='users')),
+    path('transaction/', include('transaction.urls', namespace='transaction')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   # THIS IS NEW LINE!

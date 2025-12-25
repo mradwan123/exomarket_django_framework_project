@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #c4e9d0;;
+    color: #333;
+    margin: 0;
+    padding: 40px;
+}
+
+h1 {
+    color: rgb(76, 54, 6);
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #074004;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.btn-link:hover {
+    background-color: #034119;
+    text-decoration: none;
+    color: white;
+}
+

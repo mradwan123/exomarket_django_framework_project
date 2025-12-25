@@ -1,2 +1,10 @@
-from django.db import models
-from users.models import User
+from django.urls import path
+from .views import checkout
+
+
+app_name = 'transaction'
+
+urlpatterns = [
+    path('checkout/', checkout, name='checkout'),
+
+]

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Checkout Page{% endblock %}
+
+
+{% block content %}
+
+<h1></h1>
+<b></b> Checkout page: </b></p> 
+
+{{ cart }}
+{{ total_price }}
+
+<div style="text-align: center;">
+    <img src="{% static 'img/img_market.jpg' %}" width="400" padding="200">
+</div>
+{% endblock %}
