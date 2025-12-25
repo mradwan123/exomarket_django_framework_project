@@ -43,7 +43,7 @@ class UserFormTests(TestCase):
     
     def test_invalid_phone_format(self):
         """
-        Provide an email that does not match Django's EmailValidator
+        Provide a phone past max length that does not match Django's EmailValidator
         """
         data = {
             "username":      "testerusername",
@@ -58,3 +58,22 @@ class UserFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
         self.assertIn("phone_number",form.errors)
+
+    
+    def test_blank_field_date(self):
+        """
+        Provide an email that does not match Django's EmailValidator
+        """
+        data = {
+            "username":      "testerusername",
+            "email":         "email@gmail.com",          # <-- deliberately bad
+            "password":      "test123",
+            "phone_number":  "2222222222",
+            "bio":           "some text",
+            "birth_date":    "12/12/",
+        }
+
+        form = UserForm(data=data)
+        self.assertFalse(form.is_valid())
+
+        self.assertIn("birth_date",form.errors)
