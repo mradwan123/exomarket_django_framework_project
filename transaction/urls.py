@@ -6,7 +6,7 @@ app_name = 'transaction'
 
 urlpatterns = [
     path('checkout/', checkout, name='checkout'),
-    path('checkout/process/', process_checkout, name='process_checkout'),
+    path('checkout/process/', process_checkout, name='process-checkout'),
 
 
 ]

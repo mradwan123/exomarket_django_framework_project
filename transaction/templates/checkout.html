@@ -8,10 +8,11 @@
 <h1></h1>
 <b></b> Checkout page: </b></p> 
 
-<p> {{ cart }}</p>
+<p> {{ cart.items }}</p>
 <p>Total price is: {{ total_price }}</p>
 
-    <button type="submit" class="btn-link">Checkout</button>
+    
+    <a href="{% url 'transaction:process-checkout' %}" class="btn-link">Confirm Purchase</a>
 
 
 <div style="text-align: center;">

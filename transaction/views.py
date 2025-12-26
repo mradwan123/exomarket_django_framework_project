@@ -31,7 +31,7 @@ def process_checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
     if not cart.items.exists():
         messages.error(request, "Your cart is empty!")
-        return redirect('shop:cart')
+        return redirect('shop:view-cart')
     
     try:
         with db_transaction.atomic():
@@ -72,11 +72,11 @@ def process_checkout(request):
                     request, 
                     f"Successfully purchased {len(transactions_created)} item(s)!"
                 )
-                return redirect('shop:transaction_success')
+                return redirect('transaction:transaction_success')
             else:
                 messages.error(request, "No valid items were purchased.")
-                return redirect('shop:cart')
+                return redirect('shop:view-cart')
             
     except Exception as e:
         messages.error(request, f"An error occurred during checkout: {str(e)}")
-        return redirect('shop:cart')
+        return redirect('shop:view-cart')
