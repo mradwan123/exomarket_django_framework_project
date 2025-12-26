@@ -26,7 +26,9 @@
     </div>
 
     <div class="cart-total">
-        <strong>TOTAL PRICE FOR ALL ITEMS:</strong> €{{ total_price }}
+        <br>
+        <strong>TOTAL PRICE FOR ALL ITEMS:</strong> €{{ total_price }}<br><br>
+        <a href="{% url 'transaction:checkout'%}" class="btn-link">Go to Checkout</a><br>
     </div>
 </div>
 

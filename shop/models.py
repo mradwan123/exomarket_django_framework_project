@@ -35,5 +35,5 @@ class Cart(models.Model):
     
    
     def __str__(self):
-        return f'Items of {self.user} are {self.items} with a total cost of {self.total_price}'
+        return f'Items of {self.user} are {self.items}'
 

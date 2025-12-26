@@ -72,7 +72,7 @@ def process_checkout(request):
                     request, 
                     f"Successfully purchased {len(transactions_created)} item(s)!"
                 )
-                return redirect('transaction:transaction_success')
+                return redirect('transaction:transaction-success')
             else:
                 messages.error(request, "No valid items were purchased.")
                 return redirect('shop:view-cart')
@@ -80,3 +80,6 @@ def process_checkout(request):
     except Exception as e:
         messages.error(request, f"An error occurred during checkout: {str(e)}")
         return redirect('shop:view-cart')
+    
+def transaction_success(request):
+    return redirect('transaction:transaction_success')

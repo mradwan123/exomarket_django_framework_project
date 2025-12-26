@@ -6,10 +6,15 @@
 {% block content %}
 
 <h1></h1>
-<b></b> Checkout page: </b></p> 
+<b></b>Checkout page for <strong>{{ user }}</strong>'s Cart:</b></p> 
 
+ 
+        <div class="cart-item">
+            <div><strong>Cart Name:</strong> {{ cart }}</div>
+            <div><strong>Total Price of items in Cart:</strong> {{ total_price }}</div>
+{% for item in cart_items %}
+{% endfor %}
 <p> {{ cart.items }}</p>
-<p>Total price is: {{ total_price }}</p>
 
     
     <a href="{% url 'transaction:process-checkout' %}" class="btn-link">Confirm Purchase</a>
