@@ -90,4 +90,27 @@ class ItemDetailViewTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
+    def test_unavailable_item_still_renders(self):
+        self.unavailable_item = Item.objects.create( 
+            name="Test Tech gadget",
+            description="A cool gadget.",
+            price="19.99",
+            category="Tech",
+            seller= self.user,
+            available=False,
+        )
+        url = reverse(
+            "shop:detail", kwargs={"item_id": self.unavailable_item.id}
+        )
+        response = self.client.get(url)
 
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("item", response.context)
+        self.assertFalse(response.context["item"].available)
+
+        self.assertFalse(response.context["is_available"])
+        self.assertIn("availability_message", response.context)
+        self.assertEqual(
+            response.context["availability_message"],
+            "This item is currently unavailable.",
+        )

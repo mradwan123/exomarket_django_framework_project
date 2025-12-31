@@ -19,7 +19,15 @@ def home(request):
 
 def item_detail(request, item_id):
     item = get_object_or_404(Item, id=item_id)
-    return render(request, 'item_detail_view.html', {'item':item}) 
+    context = {
+        "item": item,
+        # ``True`` when the item can be purchased, ``False`` otherwise.
+        "is_available": item.available,
+    }
+    if not item.available:
+        context["availability_message"] = "This item is currently unavailable."
+
+    return render(request, "item_detail_view.html", context)
 
 
 def item_create_view(request):
