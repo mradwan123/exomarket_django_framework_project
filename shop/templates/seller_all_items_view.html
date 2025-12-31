@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block header %}{% endblock %}
-{% block title %}View All Items Page{% endblock %}
+{% block title %}View All Items for Seller Page{% endblock %}
 
 
 
@@ -23,7 +23,7 @@
 
 <h1>List of all items</h1>
             <form method="GET" action="{% url 'shop:create-item' %}">
-                <button type='submit'>Add New Item to Inventory</button>
+                <button type='submit' class="btn-link">Add New Item to Inventory</button>
             </form>
 <ul>
     {% for item in all_items %}
@@ -33,8 +33,8 @@
             <b>Price:</b> €{{ item.price }}<br>
             <b>Seller:</b> {{ item.seller.username }}<br>
             
-            <a href="{% url 'shop:delete' item.id %}" class="btn btn-danger">Delete from Inventory</a>            
-            <a href="{% url 'shop:update' item.id %}" class="btn btn-danger">Update Item Details</a>            
+            <a href="{% url 'shop:delete' item.id %}" class="btn-link">Delete from Inventory</a>            
+            <a href="{% url 'shop:update' item.id %}" class="btn-link">Update Item Details</a>            
 
             <hr>
             

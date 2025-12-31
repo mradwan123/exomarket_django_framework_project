@@ -46,9 +46,8 @@ def item_create_view(request):
         return render(request, 'create_item.html', {'form':form}) 
 
     
-def item_update_view(request, product_id):
-    item = get_object_or_404(Item, id=product_id)
-    print(item.id)
+def item_update_view(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
     if request.user != item.seller:
         return HttpResponse("You are not allowed to update this item!")
     if request.method == 'POST':
@@ -72,13 +71,15 @@ def list_items_view(request):
     return render(request, 'view_all_items.html', context=context)
 
 
-def item_delete_view(request, product_id):
-    item = get_object_or_404(Item, id=product_id)
+def item_delete_view(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
     if request.user != item.seller:
         return HttpResponse("You are not allowed to delete this item!")
 
     item.delete()
-    return HttpResponse(f'Success!! Item {item.name} has been DELETED!')
+    context = {
+        'user': request.user}
+    return render(request, 'seller_all_items_view.html', context=context)
     # return HttpResponse('Houston, we have an issue. Invalid attempt to delete :/ ')
     
     
