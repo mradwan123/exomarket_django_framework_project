@@ -1,8 +1,8 @@
 from django.test import TestCase
-from django.db import models
+from django.db import models, IntegrityError
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from ..models import Item, User
+from ..models import Item, User, Cart
 
 User = get_user_model()   # works whether you use the default User or a custom one
 
@@ -157,3 +157,35 @@ class ItemModelTests(TestCase):
             )
         with self.assertRaises(ValidationError):
             item.full_clean()
+
+    def test_available_false_valid(self):
+        item = Item(
+            name='test',
+            description="this is a description",
+            price='23.2',
+            category="testing the category",
+            seller=self.seller,
+            available=False,
+            )
+        self.assertFalse(item.available) 
+
+# ----- Cart Testing -------
+
+class CartModelTests(TestCase):
+
+    def setUp(cls):
+        cls.user = User.objects.create_user(username='radwan', password='testpass')
+        cls.item = Item.objects.create(
+            name='SomethingCool',
+            description='A descrp of something cool',
+            price='9.99',
+            category='tech',
+            available=True,
+        )
+        cls.cart = Cart.objects.create(user=cls.user)
+
+    def test_one_to_one_cart_user(self):
+        with self.assertRaises(IntegrityError):
+            Cart.objects.create(user=self.user)  # duplicate OneToOne
+
+
