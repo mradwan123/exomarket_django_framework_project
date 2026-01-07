@@ -220,3 +220,9 @@ class CartModelTests(TestCase):
         self.assertEqual(self.cart.items.count(), 1)
         self.assertNotIn(self.item1, self.cart.items.all())
         self.assertIn(self.item2, self.cart.items.all())
+
+    def test_clear_all_items(self):
+        """Calling clear() empties the cart."""
+        self.cart.items.add(self.item1, self.item2)
+        self.cart.items.clear()
+        self.assertEqual(self.cart.items.count(), 0)
