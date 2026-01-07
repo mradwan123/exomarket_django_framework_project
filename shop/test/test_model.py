@@ -175,11 +175,18 @@ class CartModelTests(TestCase):
 
     def setUp(cls):
         cls.user = User.objects.create_user(username='radwan', password='testpass')
-        cls.item = Item.objects.create(
+        cls.item1 = Item.objects.create(
             name='SomethingCool',
             description='A descrp of something cool',
             price='9.99',
             category='tech',
+            available=True,
+        )
+        cls.item2 = Item.objects.create(
+            name='item2',
+            description='A descrp item2',
+            price='20.99',
+            category='gadget',
             available=True,
         )
         cls.cart = Cart.objects.create(user=cls.user)
@@ -196,7 +203,11 @@ class CartModelTests(TestCase):
         self.user.save()
         self.assertFalse(Cart.objects.filter(user=self.user).exists())
     
-    # def test_many_to_many(self):
+    def test_add_items_to_cart(self):
+        """Items can be added via the M2M field and retrieved back."""
+        self.cart.items.add(self.item1, self.item2)
+        self.cart.refresh_from_db()
+        self.assertEqual(self.cart.items.count(), 2)
 
 
 
