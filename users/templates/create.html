@@ -1,15 +1,28 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}User Home Page{% endblock %}
+{% block title %}Create User Page{% endblock %}
 
 {% block content %}
 
 
 <h2>Create New User</h2>
+{{ form.media }}  
+
 <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Create User</button>
+
+     <div class="form-group">  
+      {{ form.date.label_tag }}  
+      {{ form.date }}  <!-- This will render the calendar widget -->  
+      {% if form.date.errors %}  
+        <div class="text-danger">{{ form.date.errors }}</div>  
+      {% endif %}  
+    </div> 
+
+    <button type="submit" class="btn-link">Create User</button>
+    
+
 </form>
 
 {% endblock %}

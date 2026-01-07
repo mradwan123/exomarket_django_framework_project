@@ -7,14 +7,12 @@ phone_regex = RegexValidator(
     regex=r'^\+?[0-9]{7,15}$',             
     message=(
         "Enter a valid phone number. It can start with '+', "
-        "followed by 7‑15 digits."
+        "followed by 7-15 digits."
     ),
 )
 
 class User(AbstractUser):
-    """
-    Custom User model extending AbstractUser.
-    """
+    '''Custom User model extending/adding to AbstractUser.'''
     email = models.EmailField(unique=True)
     bio = models.TextField(blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
@@ -24,7 +22,6 @@ class User(AbstractUser):
         blank=True,                # allow empty form submissions
         validators=[phone_regex],
     )
-
 
     def __str__(self):
         return f'{self.username}'

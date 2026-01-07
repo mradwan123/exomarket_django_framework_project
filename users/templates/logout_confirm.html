@@ -5,7 +5,7 @@
 <h2>{{ user}}, are you sure you want to logout?</h2>
 <form method="POST">
     {% csrf_token %}
-    <button type="submit">Yes, logout</button>
-    <a href="{% url 'users:home' %}">Cancel</a>
+    <button type="submit" class="btn-link">Yes, logout</button>
+    <a href="{% url 'users:home' %}" class="btn-link">Cancel</a>
 </form>
 {% endblock %}

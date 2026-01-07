@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.admin.widgets import AdminDateWidget 
+
 from .models import User
 
 
@@ -7,6 +9,9 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password', 'phone_number', 'bio', 'birth_date']
+        widgets = {  
+            "birth_date": AdminDateWidget(),  # Replace default widget with AdminDateWidget  
+        }  
         
     def save(self):
         """Save user with hashed password"""

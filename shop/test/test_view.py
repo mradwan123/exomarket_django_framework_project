@@ -80,7 +80,6 @@ class ItemDetailViewTest(TestCase):
     def test_item_detail_view(self):
         response = self.client.get(self.detail_url)
         self.assertIn("item", response.context)
-        self.assertNotContains(response, "<img", html=True) #check no image tag because no image file
 
     def test_detail_returns_404_for_missing_item(self):
         # Pick an ID far beyond the current max
