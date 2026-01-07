@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 # Create your models here.
     
@@ -8,7 +10,8 @@ class Item(models.Model):
     description = models.CharField(max_length=255, null=True)
     price = models.DecimalField(
         max_digits = 8,
-        decimal_places = 2
+        decimal_places = 2,
+        validators=[MinValueValidator(0.01), MaxValueValidator(999999.99)]
     )
     image = models.ImageField(upload_to='item_img', null=True, blank=True)
     category = models.CharField(max_length=50, null=True)
