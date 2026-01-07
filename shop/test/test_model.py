@@ -67,6 +67,32 @@ class ItemModelTests(TestCase):
         with self.assertRaises(ValidationError):
             item.full_clean()  
 
+    def test_too_many_decimals_price(self):
+        too_many_decimals = "99.999"
+        item = Item( #removed Item.object.create to bypass the DB limit on the price validators
+            name="Test Product",
+            description="this is a description",
+            price=too_many_decimals,
+            category="testing the category",
+            seller=self.seller,
+            available=True,
+        )
+        with self.assertRaises(ValidationError):
+            item.full_clean() 
+
+    def test_max_price_accepted(self):
+        'should follow the total 8 and max 2 decimal restriction'
+        max_price = "999999.99"
+        item = Item( #removed Item.object.create to bypass the DB limit on the price validators
+            name="Test Product",
+            description="this is a description",
+            price=max_price,
+            category="testing the category",
+            seller=self.seller,
+            available=True,
+        )
+        self.assertEqual(item.price,'999999.99' )
+
     def test_too_large_name(self):
         too_large_name = "toolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolarge"
         item = Item(
