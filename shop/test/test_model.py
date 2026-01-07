@@ -56,7 +56,7 @@ class ItemModelTests(TestCase):
             
     def test_large_price(self):
         too_large_price = "999999999999999999999"
-        item = Item(
+        item = Item( #removed Item.object.create to bypass the DB limit on the price validators
             name="Test Product",
             description="this is a description",
             price=too_large_price,
@@ -64,7 +64,18 @@ class ItemModelTests(TestCase):
             seller=self.seller,
             available=True,
         )
-        with self.assertRaises(ValidationError) as cm:
+        with self.assertRaises(ValidationError):
             item.full_clean()  
 
-    
+    def test_too_large_name(self):
+        too_large_name = "toolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolargetoolarge"
+        item = Item(
+            name=too_large_name,
+            description="this is a description",
+            price="23.2",
+            category="testing the category",
+            seller=self.seller,
+            available=True,
+        )
+        with self.assertRaises(ValidationError):
+            item.full_clean()  
