@@ -186,6 +186,17 @@ class CartModelTests(TestCase):
 
     def test_one_to_one_cart_user(self):
         with self.assertRaises(IntegrityError):
-            Cart.objects.create(user=self.user)  # duplicate OneToOne
+            Cart.objects.create(user=self.user)  # attempting to add cart to user with existing cart
+
+    def test_cart_is_deleted_when_user_is_deleted(self):
+        '''Cascade delete from User → Cart.'''
+        
+        self.assertTrue(Cart.objects.filter(user=self.user).exists())
+        self.user.delete()
+        self.user.save()
+        self.assertFalse(Cart.objects.filter(user=self.user).exists())
+    
+    # def test_many_to_many(self):
+
 
 
