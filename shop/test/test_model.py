@@ -132,3 +132,17 @@ class ItemModelTests(TestCase):
         item.full_clean()   # full_clean runs model‑field validation; it should succeed
         item.save() # Save to the DB to prove persistence works
         self.assertFalse(item.image)   # After saving, the image attribute should evaluate to False
+
+    def test_item_with_image(self):
+        item = Item.objects.create(
+            name='test',
+            description="this is a description",
+            price='23.2',
+            category="testing the category",
+            seller=self.seller,
+            available=True,
+            image = 'test.png',
+        )
+        item.full_clean()   # full_clean runs model‑field validation; it should succeed
+        item.save() # Save to the DB to prove persistence works
+        self.assertTrue(item.image)   # After saving, the image attribute should evaluate to False
