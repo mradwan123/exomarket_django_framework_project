@@ -21,7 +21,7 @@ class ItemModelTests(TestCase):
         item = Item.objects.create(
             name="Test Product",
             description="this is a description",
-            price="242.22",
+            price='242.22',
             category="testing the category",
             seller=self.seller,
             available=True,
@@ -29,7 +29,7 @@ class ItemModelTests(TestCase):
 
         self.assertEqual(item.name, "Test Product")
         self.assertEqual(item.description, "this is a description")
-        self.assertEqual(item.price, "242.22")
+        self.assertEqual(item.price, '242.22')
         self.assertEqual(item.category, "testing the category")
         self.assertTrue(item.available)
         
@@ -105,3 +105,30 @@ class ItemModelTests(TestCase):
         )
         with self.assertRaises(ValidationError):
             item.full_clean()  
+
+    def test_too_large_description(self):
+        too_large_descrp= 'a'*256
+        item = Item(
+            name='test',
+            description=too_large_descrp,
+            price='23.2',
+            category="testing the category",
+            seller=self.seller,
+            available=True,
+        )
+        with self.assertRaises(ValidationError):
+            item.full_clean()  
+
+    def test_no_image(self):
+        item = Item.objects.create(
+            name='test',
+            description="this is a description",
+            price='23.2',
+            category="testing the category",
+            seller=self.seller,
+            available=True,
+            image = None,
+        )
+        item.full_clean()   # full_clean runs model‑field validation; it should succeed
+        item.save() # Save to the DB to prove persistence works
+        self.assertFalse(item.image)   # After saving, the image attribute should evaluate to False
