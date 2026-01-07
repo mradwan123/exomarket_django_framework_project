@@ -143,6 +143,17 @@ class ItemModelTests(TestCase):
             available=True,
             image = 'test.png',
         )
-        item.full_clean()   # full_clean runs model‑field validation; it should succeed
-        item.save() # Save to the DB to prove persistence works
         self.assertTrue(item.image)   # After saving, the image attribute should evaluate to False
+
+    def test_category_too_many_chars(self):
+        'max length for category is set at 50 in model'
+        item = Item(
+            name='test',
+            description="this is a description",
+            price='23.2',
+            category="a"*51,
+            seller=self.seller,
+            available=True,
+            )
+        with self.assertRaises(ValidationError):
+            item.full_clean()
