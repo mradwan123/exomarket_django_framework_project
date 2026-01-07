@@ -208,6 +208,15 @@ class CartModelTests(TestCase):
         self.cart.items.add(self.item1, self.item2)
         self.cart.refresh_from_db()
         self.assertEqual(self.cart.items.count(), 2)
+        self.assertIn(self.item1, self.cart.items.all())
+        self.assertIn(self.item2, self.cart.items.all())
 
 
+    def test_remove_item_from_cart(self):
+        """Removing an item clears the link but leaves the cart in place."""
+        self.cart.items.add(self.item1, self.item2)
+        self.cart.items.remove(self.item1)
 
+        self.assertEqual(self.cart.items.count(), 1)
+        self.assertNotIn(self.item1, self.cart.items.all())
+        self.assertIn(self.item2, self.cart.items.all())
