@@ -114,6 +114,12 @@ class ItemDetailViewTest(TestCase):
             "This item is currently unavailable.",
         )
 
+    # TO BE COMPLETETD
+    # def test_create_item(self):
+    # def test_update_item(self):
+    # def test_list_items(self):
+
+
     def test_item_delete_view(self):
         self.item = Item.objects.create( 
             name="Test Tech gadget",
@@ -125,3 +131,5 @@ class ItemDetailViewTest(TestCase):
         )        
         self.item.delete()
         self.assertFalse(Item.objects.filter(pk=self.item.pk).exists())
+
+    
