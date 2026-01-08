@@ -233,3 +233,9 @@ class CartModelTests(TestCase):
         self.item1.delete()  
         self.assertTrue(Cart.objects.filter(pk=self.cart.pk).exists())
         self.assertEqual(self.cart.items.count(), 0)
+
+    def test_new_cart_has_no_items(self):
+        '''testing new cart for new user is empty'''
+        new_user = User.objects.create_user(username='wolfgang', password='testpass', email='testttttt@test.com')
+        new_cart = Cart.objects.create(user=new_user)
+        self.assertEqual(new_cart.items.count(), 0)
