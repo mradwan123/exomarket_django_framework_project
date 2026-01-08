@@ -243,7 +243,6 @@ class CartModelTests(TestCase):
         new_cart = Cart.objects.create(user=new_user)
         self.assertEqual(new_cart.items.count(), 0)
 
-
  
     def test_total_price_returns_sum_of_item_prices(self):
         """
@@ -255,3 +254,8 @@ class CartModelTests(TestCase):
         actual_total = self.cart.total_price
 
         self.assertEqual(actual_total, expected_total)
+
+    def test_duplicate_items_not_double_counted(self):
+        self.cart.items.add(self.item1)
+        self.cart.items.add(self.item1)   # add second time, should not be counted
+        self.assertEqual(self.cart.total_price, self.item1.price)
