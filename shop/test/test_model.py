@@ -3,6 +3,8 @@ from django.db import models, IntegrityError
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from ..models import Item, User, Cart
+from decimal import Decimal
+
 
 User = get_user_model()   # works whether you use the default User or a custom one
 
@@ -178,18 +180,19 @@ class CartModelTests(TestCase):
         cls.item1 = Item.objects.create(
             name='SomethingCool',
             description='A descrp of something cool',
-            price='9.99',
+            price=Decimal('9.99'),
             category='tech',
             available=True,
         )
         cls.item2 = Item.objects.create(
             name='item2',
             description='A descrp item2',
-            price='20.99',
+            price=Decimal('2.99'),
             category='gadget',
             available=True,
         )
         cls.cart = Cart.objects.create(user=cls.user)
+
 
     def test_one_to_one_cart_user(self):
         with self.assertRaises(IntegrityError):
@@ -239,3 +242,16 @@ class CartModelTests(TestCase):
         new_user = User.objects.create_user(username='wolfgang', password='testpass', email='testttttt@test.com')
         new_cart = Cart.objects.create(user=new_user)
         self.assertEqual(new_cart.items.count(), 0)
+
+
+ 
+    def test_total_price_returns_sum_of_item_prices(self):
+        """
+        The `total_price` should equal the total of the prices of
+        all items in the cart.
+        """
+        self.cart.items.add(self.item1, self.item2)
+        expected_total = self.item1.price + self.item2.price   # Decimal addition
+        actual_total = self.cart.total_price
+
+        self.assertEqual(actual_total, expected_total)
