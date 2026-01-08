@@ -259,3 +259,8 @@ class CartModelTests(TestCase):
         self.cart.items.add(self.item1)
         self.cart.items.add(self.item1)   # add second time, should not be counted
         self.assertEqual(self.cart.total_price, self.item1.price)
+    
+    def test_price_change_reflected_in_total(self):
+        self.cart.items.add(self.item1)
+        Item.objects.filter(pk=self.item1.pk).update(price=Decimal('99.99'))
+        self.assertEqual(self.cart.total_price, Decimal('99.99'))
