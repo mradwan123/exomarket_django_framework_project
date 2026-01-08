@@ -14,7 +14,7 @@
         <div class="cart-item">
             <div><strong>Item Name:</strong> {{ item.name }}</div>
             <div><strong>Description:</strong> {{ item.description }}</div>
-            <div><strong>Price:</strong> €{{ item.price }}</div>
+            <div><strong>Price:</strong> ${{ item.price }}</div>
             
             <div class="item-action">
                 <a href="{% url 'shop:remove-cart' item.id %}" class="btn-link">Remove from Cart</a>
@@ -27,7 +27,7 @@
 
     <div class="cart-total">
         <br>
-        <strong>TOTAL PRICE FOR ALL ITEMS:</strong> €{{ total_price }}<br><br>
+        <strong>TOTAL PRICE FOR ALL ITEMS:</strong> ${{ total_price }}<br><br>
         <a href="{% url 'transaction:checkout'%}" class="btn-link">Go to Checkout</a><br>
     </div>
 </div>

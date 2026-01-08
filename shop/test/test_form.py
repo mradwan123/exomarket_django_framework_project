@@ -3,6 +3,7 @@ from django.db import models, IntegrityError
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from ..forms import ItemForm
+from .. models import Item
 from decimal import Decimal
 
 class ItemFormSimpleTest(TestCase):

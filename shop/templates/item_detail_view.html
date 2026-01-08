@@ -15,14 +15,16 @@
 
 <p><b>Item Name: {{ item.name }}</b></p>
 <ul>
-        <li><b>Item Price:</b> {{ item.price}}</li>
+        <li><b>Item Price:</b> ${{ item.price}}</li>
         <li><b>Item Category:</b> {{ item.category}}</li>
         <li><b>Item Description:</b> {{ item.description}}</li>
         <li><b>Seller:</b> {{ item.seller}}</li>
         {% if item.available %}<li><b>Available:</b> Yes</li>{% endif %}
 
 </ul>
-{% if request.user == item.seller %} <a href="{% url 'shop:delete' item.id %}" class="btn-link">Delete Permanently</a> {% endif %}
-{% if request.user == item.seller %} <button type="delete" class="btn-link">Enter to Delete Item</button>{% endif %}
+    {% if request.user == item.seller %} 
+        <a href="{% url 'shop:delete' item.id %}" class="btn-link">Delete Permanently</a>
+        <a href="{% url 'shop:update' item.id %}" class="btn-link">Update Item Info</a>
+    {% endif %}
 {% endblock %}
 
