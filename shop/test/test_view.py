@@ -113,3 +113,15 @@ class ItemDetailViewTest(TestCase):
             response.context["availability_message"],
             "This item is currently unavailable.",
         )
+
+    def test_item_delete_view(self):
+        self.item = Item.objects.create( 
+            name="Test Tech gadget",
+            description="A cool gadget.",
+            price="19.99",
+            category="Tech",
+            seller= self.user,
+            available=True,
+        )        
+        self.item.delete()
+        self.assertFalse(Item.objects.filter(pk=self.item.pk).exists())
