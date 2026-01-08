@@ -2,10 +2,12 @@
 {% load static %}
 {% block title %}Search View Page{% endblock %}
 
-{% block content %}
 
+
+{% block content %}
 <form class="d-flex" role="search" method="POST">
  {% csrf_token %}
+ 
  <input
     class="form-control me-2"
     type="search"

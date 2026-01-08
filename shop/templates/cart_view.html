@@ -8,28 +8,33 @@
 
 <div class="cart-container">
     <h1>List of all items in {{ request.user }} cart:</h1>
-
-    <div class="items-list">
-        {% for item in cart_items %}
-        <div class="cart-item">
-            <div><strong>Item Name:</strong> {{ item.name }}</div>
-            <div><strong>Description:</strong> {{ item.description }}</div>
-            <div><strong>Price:</strong> ${{ item.price }}</div>
-            
-            <div class="item-action">
-                <a href="{% url 'shop:remove-cart' item.id %}" class="btn-link">Remove from Cart</a>
+    {% if cart_items %}
+        <div class="items-list">
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <div><strong>Item Name:</strong> {{ item.name }}</div>
+                <div><strong>Description:</strong> {{ item.description }}</div>
+                <div><strong>Price:</strong> ${{ item.price }}</div>
+                
+                <div class="item-action">
+                    <a href="{% url 'shop:remove-cart' item.id %}" class="btn-link">Remove from Cart</a>
+                </div>
+                
+                <hr>
             </div>
-            
-            <hr>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
 
-    <div class="cart-total">
-        <br>
-        <strong>TOTAL PRICE FOR ALL ITEMS:</strong> ${{ total_price }}<br><br>
-        <a href="{% url 'transaction:checkout'%}" class="btn-link">Go to Checkout</a><br>
-    </div>
+        <div class="cart-total">
+            <br>
+            <strong>TOTAL PRICE FOR ALL ITEMS:</strong> ${{ total_price }}<br><br>
+            <a href="{% url 'transaction:checkout'%}" class="btn-link">Go to Checkout</a><br>
+        </div>
+    {% else %}
+        <p>There are no items in the cart. </p><br>
+        <p>Go to See Items to add items to you cart. Spend your money! You deserve it!</p>
+    {% endif %}
+
 </div>
 
 {% endblock %}
