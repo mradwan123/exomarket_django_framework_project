@@ -8,13 +8,16 @@ from decimal import Decimal
 class ItemFormSimpleTest(TestCase):
     def test_valid_form(self):
         form = ItemForm({
-            'title': 'Test Product',
             'name':'testname',
-            'description':'testdesccrp"',
+            'description':'testdescrp',
             'price':'3.22',
             'image':None,
             'category':'tech', 
             'available':True,
-           
         })
         self.assertTrue(form.is_valid())
+       
+
+    def test_empty_form(self):
+        form = ItemForm({})
+        self.assertFalse(form.is_valid())
