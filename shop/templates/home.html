@@ -6,10 +6,20 @@
 {% block content %}
 
 <h1>{{ title }}</h1>
-{% if request.user.is_authenticated %}<p><b>Hello {{ user }}</b></p> 
-<p><strong>Last Login:</strong> {{ request.user.last_login }} </p>
+{% if request.user.is_authenticated %}
+    <p><b>Hello {{ user }}</b></p> 
+        <p>Your admin rights as a <strong>Superuser / Administrator</strong> allow you to:</p>
+        <ul>
+            <li>Create New Item</li>
+            <li>Delete Item</li>
+            <li>Add to your personal cart</li>
+            <li>As for all users, you can see all items and checkout</li>
+
+        </ul>
+ 
+    <p><strong>Last Login:</strong> {{ request.user.last_login }} </p>
 {% else %}
-<p><b>Hello Stranger, would you like to register?</b></p> 
+    <p><b>Hello Stranger, would you like to register?</b></p> 
 {% endif %}
 
 <div style="text-align: center;">

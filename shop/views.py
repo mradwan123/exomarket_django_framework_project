@@ -144,13 +144,19 @@ def remove_from_cart_view(request, item_id):
 
 
 def search_feature(request):
-    if request.method == 'POST':
-        search_query = request.POST['name']
-        # Filter your model by the search query
-        posts = Item.objects.filter(name__contains=search_query)
-        return render(request, 'view_all_items.html', {'all_items':posts})
-    else:
-        return render(request, 'search.html',{})
+    if request.method == "POST":
+        raw_query = request.POST.get("name", "").strip()
+        if raw_query:
+            # `icontains` = case‑insensitive LIKE
+            posts = Item.objects.filter(name__icontains=raw_query)
+        else:
+            # Empty query → return nothing (or you could return all items)
+            posts = Item.objects.none()
+
+        return render(request,"view_all_items.html",
+                        {"all_items": posts, "search_term": raw_query},
+        )
+    return render(request, "search.html")
     
     
 #     print(bool(cart))
