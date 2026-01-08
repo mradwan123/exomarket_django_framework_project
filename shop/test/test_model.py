@@ -264,3 +264,8 @@ class CartModelTests(TestCase):
         self.cart.items.add(self.item1)
         Item.objects.filter(pk=self.item1.pk).update(price=Decimal('99.99'))
         self.assertEqual(self.cart.total_price, Decimal('99.99'))
+
+    def test_total_price_after_item_deletion(self):
+        self.cart.items.add(self.item1, self.item2)
+        self.item1.delete()
+        self.assertEqual(self.cart.total_price, self.item2.price)
