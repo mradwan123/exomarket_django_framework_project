@@ -7,7 +7,7 @@
 {% block content %}  
 
 <div class="cart-container">
-    <h1>List of all items in {{ request.user }}'s cart:</h1>
+    <h2>List of all items in {{ request.user }}'s cart:</h2>
     {% if cart_items %}
         <div class="items-list">
             {% for item in cart_items %}
