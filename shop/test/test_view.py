@@ -146,7 +146,6 @@ class ItemCreateTest(TestCase):
         
     
     
-    # TO BE COMPLETETD
   
 class ItemUpdateTest(TestCase): 
     @classmethod
@@ -214,8 +213,86 @@ class ItemUpdateTest(TestCase):
         self.assertEqual(str(self.item.price), "42.50")
         self.assertEqual(self.item.category, "Updated Category")
         self.assertTrue(self.item.available)
+
+
+class ListItemsViewTests(TestCase):
+    """
+    Tests for ``list_items_view`` which renders ``view_all_items.html`` with
+    the current user and a queryset of all Item objects.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        # Create two users – one will be logged in, the other will stay anonymous
+        cls.user = User.objects.create_user(
+            username="radwan",
+            email="radwan@example.com",
+            password="StrongPwd!23",
+        )
+        cls.other_user = User.objects.create_user(
+            username="alice",
+            email="alice@example.com",
+            password="AlicePwd!23",
+        )
+
+        # Create a handful of Item instances that the view should list
+        cls.item_a = Item.objects.create(
+            name="Alpha",
+            description="First item",
+            price="10.00",
+            category="Category A",
+            seller=cls.user,
+            available=True,
+        )
+        cls.item_b = Item.objects.create(
+            name="Beta",
+            description="Second item",
+            price="20.50",
+            category="Category B",
+            seller=cls.other_user,
+            available=False,
+        )
+        cls.item_c = Item.objects.create(
+            name="Gamma",
+            description="Third item",
+            price="5.75",
+            category="Category C",
+            seller=cls.user,
+            available=True,
+        )
+
+    def setUp(self):
+        # Resolve the URL that points to the view – adjust the name if yours differs
+        self.url = reverse("shop:list") 
         
+    def test_authenticated_user_is_passed_to_template(self):
+        """
+        When a logged-in user accesses the view, ``request.user`` should be
+        the actual User instance (not AnonymousUser) and still see all items.
+        """
+        self.client.login(username="radwan", password="StrongPwd!23")
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "view_all_items.html")
+
+        # ``user`` in the context should be the logged‑in user
+        self.assertTrue(response.context["user"].is_authenticated)
+        self.assertEqual(response.context["user"], self.user)
+
+        # All items must still be present
+        all_items_qs = response.context["all_items"]
+        self.assertQuerySetEqual(
+            all_items_qs.order_by("id"),
+            Item.objects.all().order_by("id"),
+            transform=lambda x: x,
+        )
+
+    # TO BE COMPLETETD
+  
     # def test_list_items(self):
+    # def item_delete_view(self)
+    # def seller_all_items_view(self)
 
 
    
