@@ -60,7 +60,7 @@ class ItemDetailViewTest(TestCase):
 
     def test_item_detail_receives_correct_id(self):
         """
-        The view should return HTTP 200, render the correct template,
+        The view should return HTTP 200, render the correct template,
         and expose the `item` object (with the same PK we passed in the URL)
         in the template context.
         """
@@ -137,8 +137,6 @@ class ItemCreateTest(TestCase):
         self.client.login(username="radwan", password="Password123")
         self.url = reverse("shop:create-item")  
         
-    # def test_create_item(self):
-        
     def test_get_returns_form(self):
         response = self.client.get(self.url)
 
@@ -150,7 +148,42 @@ class ItemCreateTest(TestCase):
     
     # TO BE COMPLETETD
   
-    # class ItemUpdateTest(Testacse): def test_update_item(self):
+class ItemUpdateTest(TestCase): 
+    @classmethod
+    def setUpTestData(cls):
+        # Two users: one will own the item, the other will try to edit it
+        cls.owner = User.objects.create_user(
+            username="owner",
+            email="owner@example.com",
+            password="OwnerPass",
+        )
+        cls.other = User.objects.create_user(
+            username="intruder",
+            email="intruder@example.com",
+            password="IntruderPass",
+        )
+
+        # Create an item that belongs to ``owner``
+        cls.item = Item.objects.create(
+            name="Original Name",
+            description="Original description",
+            price="10.00",
+            category="Original",
+            seller=cls.owner,
+            available=True,
+        )
+    def test_non_owner_cannot_update(self):
+        self.client.login(username="intruder", password="IntruderPass")
+        resp = self.client.get(self.update_url)
+
+        self.assertEqual(resp.status_code, 200)   # view returns HttpResponse, not a redirect
+        self.assertContains(resp, "You are not allowed to update this item!")
+
+        # Even a POST should be blocked
+        resp_post = self.client.post(self.update_url, data={"name": "Hacked"})
+        self.assertContains(resp_post, "You are not allowed to update this item!")
+        
+        
     # def test_list_items(self):
 
 
