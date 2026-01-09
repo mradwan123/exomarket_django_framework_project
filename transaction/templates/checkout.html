@@ -12,9 +12,21 @@
         <div class="cart-item">
             <div><strong>Cart Name:</strong> {{ cart }}</div>
             <div><strong>Total Price of items in Cart:</strong> {{ total_price }}</div>
-{% for item in cart_items %}
-{% endfor %}
-<p> {{ cart.items }}</p>
+
+{% for item in items %}
+    
+        <li>
+            <b>Item name:</b> {{ item.name }}<br>
+            <b>Description:</b> {{ item.description }}<br>
+            <b>Price:</b> ${{ item.price }}<br>
+           
+            <a href="{% url 'shop:detail' item.id %}" class="btn-link">View Item Details 📇 </a>
+            <a href="{% url 'shop:add-to-cart' item.id %}" class="btn-link">Add to Cart 🛒</a>
+            <hr>
+        </li>
+   
+
+    {% endfor %}
 
     
     <a href="{% url 'transaction:process-checkout' %}" class="btn-link">Confirm Purchase</a>

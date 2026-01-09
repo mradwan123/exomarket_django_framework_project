@@ -113,13 +113,6 @@ class ItemDetailViewTest(TestCase):
             response.context["availability_message"],
             "This item is currently unavailable.",
         )
-
-    # TO BE COMPLETETD
-    # def test_create_item(self):
-    # def test_update_item(self):
-    # def test_list_items(self):
-
-
     def test_item_delete_view(self):
         self.item = Item.objects.create( 
             name="Test Tech gadget",
@@ -132,4 +125,34 @@ class ItemDetailViewTest(TestCase):
         self.item.delete()
         self.assertFalse(Item.objects.filter(pk=self.item.pk).exists())
 
+class ItemCreateTest(TestCase):
+    def setUpUserTestData(cls):
+        cls.seller = User.objects.create_user(
+            username="radwan",
+            email="radwan@example.com",
+            password="Password123"
+        )
+
+    def setUp(self):
+        self.client.login(username="radwan", password="Password123")
+        self.url = reverse("shop:create-item")  
+        
+    # def test_create_item(self):
+        
+    def test_get_returns_form(self):
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "create_item.html")
+        
+        
+    
+    
+    # TO BE COMPLETETD
+  
+    # class ItemUpdateTest(Testacse): def test_update_item(self):
+    # def test_list_items(self):
+
+
+   
     

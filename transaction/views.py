@@ -22,7 +22,8 @@ def checkout(request):
     context = {
         'cart': cart,
         'total_price': cart.total_price,
-        'user': request.user
+        'user': request.user,
+        'item': cart.items
     }
     return render(request, 'checkout.html', context)
 
