@@ -288,9 +288,58 @@ class ListItemsViewTests(TestCase):
             transform=lambda x: x,
         )
 
+class ItemDeleteViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        # Two users – one will own the item, the other will try to delete it
+        cls.owner = User.objects.create_user(
+            username="owner",
+            email="owner@example.com",
+            password="OwnerPwd!23",
+        )
+        cls.other = User.objects.create_user(
+            username="intruder",
+            email="intruder@example.com",
+            password="IntruderPwd!23",
+        )
+
+        # Create an Item belonging to ``owner``
+        cls.item = Item.objects.create(
+            name="Deletable Item",
+            description="Will be removed",
+            price="12.34",
+            category="TestCat",
+            seller=cls.owner,
+            available=True,
+        )
+
+    def setUp(self):
+        # Resolve the URL that points to the view – adjust the name if yours differs
+        self.delete_url = reverse(
+            "shop:delete",               # <-- URL name for item_delete_view
+            kwargs={"item_id": self.item.id},
+        )
+
+    def test_owner_can_delete_item(self):
+        self.client.login(username="owner", password="OwnerPwd!23")
+        response = self.client.get(self.delete_url)
+
+        # After deletion the view renders a template (status 200)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "seller_all_items_view.html")
+
+        # Context should contain the logged‑in user
+        self.assertIn("user", response.context)
+        self.assertTrue(response.context["user"].is_authenticated)
+        self.assertEqual(response.context["user"], self.owner)
+
+        # The Item must be gone from the DB
+        self.assertFalse(Item.objects.filter(id=self.item.id).exists())
+    
+   
+   
     # TO BE COMPLETETD
-  
-    # def test_list_items(self):
+ 
     # def item_delete_view(self)
     # def seller_all_items_view(self)
 
