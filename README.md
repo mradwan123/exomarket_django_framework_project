@@ -4,7 +4,7 @@ Django e-commerce project where users can buy and sell exotic items:
 
 
 ### **Project Overview:**
-An e-commerce platform where authenticated users can list, buy, and sell exotic items. The application will have user registration, item listing, cart functionality
+An e-commerce platform where authenticated users can list, buy, and sell exotic items. The application has user registration, item listing, cart functionality
 
 ### **Features:**
 1. **User Authentication:**

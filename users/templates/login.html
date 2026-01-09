@@ -6,10 +6,11 @@
 
 <form method="post">
   {% csrf_token %}
+  <p>Please enter details to login:</p>
   <label for="username">Username</label>
   <input type="text" id="username" name="username"><br><br>
   <label for="password">Password</label>
-  <input type="text" id="password" name="password"><br><br>
+  <input type="password" id="password" name="password"><br><br>
   <button type="submit" class="btn-link">Log In</button>
 </form>
 {% endblock %}
