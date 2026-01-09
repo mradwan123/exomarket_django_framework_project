@@ -172,6 +172,15 @@ class ItemUpdateTest(TestCase):
             seller=cls.owner,
             available=True,
         )
+        
+    
+    def setUp(self):
+        self.update_url = reverse(
+            "shop:update",
+            kwargs={"item_id": self.item.id},
+        )
+        
+    #----#
     def test_non_owner_cannot_update(self):
         self.client.login(username="intruder", password="IntruderPass")
         resp = self.client.get(self.update_url)
@@ -182,7 +191,29 @@ class ItemUpdateTest(TestCase):
         # Even a POST should be blocked
         resp_post = self.client.post(self.update_url, data={"name": "Hacked"})
         self.assertContains(resp_post, "You are not allowed to update this item!")
-        
+    
+    def test_owner_post_valid_updates_item(self):
+        self.client.login(username="owner", password="OwnerPass")
+
+        # Minimal payload that satisfies ItemForm validation
+        payload = {
+            "name": "Updated Name",
+            "description": "Updated description",
+            "price": "42.50",
+            "category": "Updated Category",
+            "available": True, 
+        }  
+    
+        resp = self.client.post(self.update_url, data=payload, follow=False)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Success! Your Item Has Been Updated.')
+
+        self.item.refresh_from_db()
+        self.assertEqual(self.item.name, "Updated Name")
+        self.assertEqual(self.item.description, "Updated description")
+        self.assertEqual(str(self.item.price), "42.50")
+        self.assertEqual(self.item.category, "Updated Category")
+        self.assertTrue(self.item.available)
         
     # def test_list_items(self):
 
