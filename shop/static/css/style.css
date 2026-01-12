@@ -1,13 +1,34 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #eef5ee;;
+    background-color: #f4f4f4;;
     color: #333;
     margin: 0;
     padding: 50px;
+
+    
 }
 
 h1 {
     color: rgb(76, 54, 6);
+}
+
+body.home-bg {
+    /* The image path must be reachable via the static files system.
+       If the image lives in static/img/home-bg.jpg: */
+    background-image: url("../img/img_market.jpg");
+    background-size: cover;          
+    background-position: center;     
+    background-repeat: no-repeat;
+    background-attachment: fixed;   
+}
+
+/* If you want a slight overlay (e.g. darkening) you can add a pseudo‑element */
+body.home-bg::before {
+    content: "";
+    position: fixed;                 
+    inset: 0;
+    background: rgba(0,0,0,0.15);   
+    pointer-events: none;            
 }
 
 .btn-link {
