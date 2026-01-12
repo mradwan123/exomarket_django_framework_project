@@ -18,7 +18,10 @@ def home(request):
 # Item Views: 
 
 def item_detail(request, item_id):
-    item = get_object_or_404(Item, id=item_id)
+    try:
+        item = get_object_or_404(Item, id=item_id) 
+    except:
+        return redirect('shop:list') # auto redirect instead of giving 404 error to user
     context = {
         "item": item,
         # ``True`` when the item can be purchased, ``False`` otherwise.
@@ -72,7 +75,10 @@ def list_items_view(request):
 
 
 def item_delete_view(request, item_id):
-    item = get_object_or_404(Item, id=item_id)
+    try:
+        item = get_object_or_404(Item, id=item_id) 
+    except:
+        return redirect('shop:list') # auto redirect instead of giving 404 error to user
     if request.user != item.seller:
         return HttpResponse("You are not allowed to delete this item!")
 
@@ -103,9 +109,8 @@ def seller_all_items_view(request, seller_id):
 #WIP
 def add_to_cart_view(request, item_id):
     """
-    Docstring for add_to_cart_view: 
-    Passing item_id from url -> checking POST request - getting item details - creating cart if it doesnt exist for user
-    add and saving item to cart- providing response
+    Passing item_id from url -> checking POST request -> getting item details -> creating cart if it doesnt exist for user
+    add and saving item to cart-> providing response
     
     :param request: requried for function based views in django ORM
     :param item_id: id from Item class passed in url
