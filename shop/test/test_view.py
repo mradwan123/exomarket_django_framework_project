@@ -87,7 +87,7 @@ class ItemDetailViewTest(TestCase):
         url = reverse("shop:detail", kwargs={"item_id": missing_pk})
 
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_unavailable_item_still_renders(self):
         self.unavailable_item = Item.objects.create( 

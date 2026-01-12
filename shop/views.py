@@ -135,7 +135,6 @@ def view_user_cart_view(request):
               'cart_items': cart_items, 
               'total_price': cart.total_price
             }
-    print(cart_items)
     return render(request, 'cart_view.html', context=context)
 
 def remove_from_cart_view(request, item_id):
