@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login , logout
 from django.contrib.auth.decorators import login_required
 from .models import User
-from .forms import UserForm
+from .forms import UserForm, UserUpdateForm
 # Create your views here.
 
 
@@ -54,32 +54,14 @@ def logout_custom(request):
 @login_required
 def update_profile(request):
     if request.method == "POST":
-        form = UserForm(request.POST)
+        form = UserUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
-            user = form.save()
+            form.save()
+            return redirect("users:update-profile")
     else:
-        form = UserForm()
+        form = UserUpdateForm(instance=request.user)
     
     return render(request, 'update.html', {'form':form})
 # need to test above function for saved data - ,next step: must check admin page.
         
 
-
-# def loggin(request):
-#     if request.method == "POST":
-#         form = UserForm(request.POST)
-#         if form.is_valid():
-            
-#             username = request.POST["username"]
-#             password = request.POST["password"]
-#             user = authenticate(request, username=username, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 # Redirect to a success page.
-#                 return redirect('home')
-#             else:
-#                 # Return an 'invalid login' error message
-#                 return HttpResponse('problem, could not logged in')
-
-
-    

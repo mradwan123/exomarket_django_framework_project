@@ -26,4 +26,17 @@ class UserForm(forms.ModelForm):
         user.set_password(self.cleaned_data['password'])
         user.save()
         return user
+    
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        # Do NOT include is_staff, is_superuser, groups, etc.
+        fields = ["first_name", "last_name", 'phone_number', 'bio', 'birth_date']
+        # Optional: make email required and unique
+        widgets = {
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+            "birth_date": AdminDateWidget(),
+        }
  
