@@ -118,18 +118,22 @@ body.home-bg::before {
   max-width: 300px;
   border: none;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
 .subscribe-btn {
-  padding: 20px 20px;
-  background-color: #1abc9c;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
+    display: inline-block;
+    padding: 0.55rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #0069d9;
+    border: none;
+    border-radius: 0.35rem;
+    cursor: pointer;
+    text-decoration: none;   /* for <a> elements */
+    text-align: center;
+
 }
 
 .subscribe-btn:hover {
