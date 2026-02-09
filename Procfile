@@ -1,0 +1,1 @@
+web: gunicorn exomarket.wsgi --log-file -
