@@ -1,6 +1,12 @@
 asgiref
 coverage
+dj-database-url
 Django
+dotenv
+gunicorn
+packaging
 pillow
 psycopg2-binary
+python-dotenv
 sqlparse
+whitenoise
