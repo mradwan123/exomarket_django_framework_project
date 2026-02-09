@@ -1,10 +1,10 @@
 # ExoMarket
 
-Django e-commerce project where users can buy and sell exotic items:
+Django e-commerce project where users can buy and sell high quality and interesting items from around the world:
 
 
 ### **Project Overview:**
-An e-commerce platform where authenticated users can list, buy, and sell exotic items. The application has user registration, item listing, cart functionality
+An e-commerce platform where authenticated users can list, buy, and sell items. The application has user registration, item listing, cart functionality
 
 ### **Features:**
 1. **User Authentication:**
